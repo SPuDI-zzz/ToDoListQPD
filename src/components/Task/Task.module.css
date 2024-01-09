@@ -1,0 +1,104 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #3F72AF;
+    padding: 8px 16px 10px;
+    height: 62px;
+}
+
+.leftBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+}
+
+
+.taskContainer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.directory {
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='20' viewBox='0 0 24 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.8823 3.21536H12.1365L10.1953 0.907127C10.1373 0.83748 10.0505 0.798421 9.95999 0.801245H2.11765C0.943765 0.812892 -0.00135149 1.76848 1.45074e-06 2.94242V17.0601C-5.73727e-05 18.2331 0.944706 19.1873 2.11765 19.1989H21.8823C23.0553 19.1873 24 18.2331 24 17.0601V5.35419C24 4.18119 23.0553 3.22701 21.8823 3.21536Z' fill='%233F72AF'/%3E%3C/svg%3E%0A");
+    width: 24px;
+    height: 18.4px;
+    background-repeat: no-repeat no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 24px;
+}
+
+.categoryName {
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #3F72AF;
+}
+
+.taskName {
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: black;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    height: 32px;
+}
+
+.description {
+    display: flex;
+    height: 28px;
+    align-items: center;
+}
+
+.descriptionText {
+    --max-lines: 1;
+    --line-height: 20px;
+    font-family: Roboto;
+    font-size: var(--font-size);
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #808080;
+    height: calc(var(--max-lines) * var(--line-height));
+    overflow: hidden;
+}
+
+.rightBlock {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 14px;
+}
+
+.edit {
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_28_103)'%3E%3Cpath d='M0 18.9993V24H5.00069L19.756 9.24459L14.7553 4.2439L0 18.9993Z' fill='%233F72AF'/%3E%3Cpath d='M23.61 3.5038L20.4962 0.390054C19.9762 -0.130018 19.1294 -0.130018 18.6093 0.390054L16.1689 2.83039L21.1696 7.83108L23.61 5.39074C24.1301 4.87067 24.1301 4.02387 23.61 3.5038Z' fill='%233F72AF'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_28_103'%3E%3Crect width='24' height='24' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}
+
+.delete {
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 21.3333C4 22.8067 5.19331 24 6.66669 24H17.3334C18.8067 24 20 22.8067 20 21.3333V5.33331H4V21.3333Z' fill='%233F72AF'/%3E%3Cpath d='M16.6667 1.33331L15.3334 0H8.66675L7.33337 1.33331H2.66675V4H21.3334V1.33331H16.6667Z' fill='%233F72AF'/%3E%3C/svg%3E");
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}

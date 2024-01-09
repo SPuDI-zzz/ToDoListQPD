@@ -1,0 +1,9 @@
+.separator{
+    border: 1px #DBE2EF;
+    border-style: none solid;
+    height: 28px;
+    margin: 0 auto;
+    font-size: 23px;
+    display: inline;
+    vertical-align: baseline;
+}
