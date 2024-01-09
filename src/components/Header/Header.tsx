@@ -11,7 +11,7 @@ const Header: FC<HeaderProps> = ({buttonText, onButtonClick}) => {
     return (
         <header className={styles.header}>
             <div className={styles.container}>
-                <div className={styles.rightBlock}>
+                <div className={styles.leftBlock}>
                     <h1 className={styles.toDoList}>ToDo List</h1>
                     <Nav />
                 </div>

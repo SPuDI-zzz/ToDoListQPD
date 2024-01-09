@@ -16,7 +16,7 @@
     padding: 0 24px;
 }
 
-.rightBlock {
+.leftBlock {
     display: flex;
     justify-content: space-between;
     width: 464px;

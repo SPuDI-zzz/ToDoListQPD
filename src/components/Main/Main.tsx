@@ -4,9 +4,9 @@ import styles from './Main.module.css'
 const Main: FC<PropsWithChildren> = ({children}) => {
     return (
         <main className={styles.main}>
-            <div className={styles.container}>
+            <section className={styles.container}>
                 {children}
-            </div>
+            </section>
         </main>
     );
 };
