@@ -11,7 +11,9 @@ const HeaderNavLink: FC<HeaderNavLinkProps> = ({navigateTo, textLink}) => {
     return (
         <li>
             <NavLink 
-                className={styles.link}
+                className={({ isActive }) => 
+                    `${styles.link} ${isActive ? styles.activeLink : ''}`
+                }
                 to={navigateTo}>
                 {textLink}
             </NavLink>

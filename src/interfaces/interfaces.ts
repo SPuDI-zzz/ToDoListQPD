@@ -2,13 +2,10 @@ export interface ITaskResponse {
     id: number;
     name: string;
     description: string;
-    categoryId: number;
+    categoryId?: number;
 }
 
-export interface ITask {
-    id: number;
-    name: string;
-    description: string;
+export interface ITask extends Omit<ITaskResponse, 'categoryId'> {
     categoryName?: string;
 }
 
@@ -18,17 +15,4 @@ export interface ICategoryResponse {
     description: string;
 }
 
-export interface ICategory {
-    id: number;
-    name: string;
-    description: string;
-}
-
-export interface ListProps<T> {
-    items: T[];
-    renderItem: (item: T) => React.ReactNode;
-}
-
-export interface TaskProps {
-    task: ITask;
-}
+export interface ICategory extends ICategoryResponse { }

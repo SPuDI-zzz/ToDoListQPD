@@ -1,6 +1,10 @@
 import React, { FC } from 'react';
-import { TaskProps } from '../../interfaces/interfaces';
 import styles from './Task.module.css'
+import { ITask } from '../../interfaces/interfaces';
+
+export interface TaskProps {
+    task: ITask;
+}
 
 const Task: FC<TaskProps> = ({task}) => {
     return (
@@ -8,13 +12,13 @@ const Task: FC<TaskProps> = ({task}) => {
             <div className={styles.leftBlock}>
                 <div className={styles.taskContainer}>
                     <div className={styles.task}>
-                        <p className={styles.taskName}>{task.name}</p>
+                        <p title={task.name} className={styles.taskName}>{task.name}</p>
                     </div>
                     {
                         task.categoryName ?
                             <div className={styles.category}>
                                 <div className={styles.directory} />
-                                <p className={styles.categoryName}>{task.categoryName}</p>
+                                <p title={task.categoryName} className={styles.categoryName}>{task.categoryName}</p>
                             </div> :
                             ''
                     }

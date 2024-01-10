@@ -1,6 +1,8 @@
+@import url(../../constants/constants.module.css);
+
 .container {
     position: fixed;
-    background: #0000004D;
+    background: var(--color-background-modal-panel);
     width: 100vw;
     height: 100vh;
     top: 0;

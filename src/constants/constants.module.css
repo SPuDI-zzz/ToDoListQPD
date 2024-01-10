@@ -1,0 +1,10 @@
+:root {
+    --color-grey: #808080;
+    --color-blue: #3F72AF;
+    --color-blue-light: #8FB6FF;
+    --color-white-primary: #FFFFFF;
+    --color-white-secondary: #DBE2EF;
+    --color-background-modal-panel: #0000004D;
+    --color-background-shadow: rgba(0, 0, 0, 0.5);
+    --color-black: #000000;
+}

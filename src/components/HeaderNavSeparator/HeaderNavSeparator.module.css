@@ -1,5 +1,7 @@
+@import url(../../constants/constants.module.css);
+
 .separator{
-    border: 1px #DBE2EF;
+    border: 1px var(--color-white-secondary);
     border-style: none solid;
     height: 28px;
     margin: 0 auto;

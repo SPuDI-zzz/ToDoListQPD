@@ -2,7 +2,7 @@
     font-size: 50px;
     font-family: 'Roboto';
     display: flex;
-    justify-content: center; /*центрируем элемент по горизонтали */
+    justify-content: center;
     align-items: center;
     height: 100vh;
     margin-top: -90px;
