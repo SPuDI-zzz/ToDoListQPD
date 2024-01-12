@@ -7,7 +7,10 @@ export const tasksApi = api.injectEndpoints({
             query: () => ({
                 url: '/GetTasks',
                 method: 'GET',
-            })
+            }),
+            providesTags: () => [{
+                type: 'Tasks'
+            }]
         })
     })
 });

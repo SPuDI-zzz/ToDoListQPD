@@ -1,40 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { getTasks } from '../../api/apiTasks';
+import React from 'react';
 import { ITask } from '../../interfaces/interfaces';
 import Task from '../Task/Task';
-import { getCategories } from '../../api/apiCatagories';
+import { useGetTasksQuery } from '../../app/services/tasks.api';
+import { useGetCategoriesQuery } from '../../app/services/categories.api';
 
 const Tasks = () => {
-    const [tasks, setTasks] = useState<ITask[]>([]);
+    const {isLoading: isLoadingTasks, data: tasksResponse} = useGetTasksQuery();
+    const {isLoading: isLoadingCategories, data: categoriesResponse} = useGetCategoriesQuery();
 
-    useEffect(() => {
-        (async () => {
-            const [taskResponse, categoryResponse] = await Promise.all([getTasks(), getCategories()]);
-
-            const tasks = taskResponse.map((task):ITask => {
-                const categoryName = categoryResponse.find(category => category.id === task.categoryId)?.name;
+    const tasks = tasksResponse?.map((task):ITask => {
+        const categoryName = categoriesResponse?.find(category => category.id === task.categoryId)?.name;
                 
-                return {
-                    id: task.id,
-                    name: task.name,
-                    description: task.description,
-                    categoryName: categoryName,
-                }
-            });
-
-            setTasks(tasks);
-        })();
-    }, [tasks]);
-
-
+        return {
+            id: task.id,
+            name: task.name,
+            description: task.description,
+            categoryName: categoryName,
+        }
+    });
+    
     return (
         <>
-            {tasks.map((task) => 
-                <Task 
-                    key={task.id} 
-                    task={task}
-                />
-            )}
+            {isLoadingTasks || isLoadingCategories ? 
+                <div>Loading...</div> :
+                tasks ? tasks.map(
+                    task => 
+                        <Task 
+                            key={task.id} 
+                            task={task}
+                        />
+                    )
+                    : ''
+            }
             <Task 
                 key={1536}
                 task={{

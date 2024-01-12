@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({
 
 export const api = createApi({
     reducerPath: 'splitApi',
-    
+    tagTypes: ['Tasks', 'Categories'],
     baseQuery: baseQuery,
     endpoints: () => ({}),
 });
