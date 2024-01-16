@@ -5,8 +5,12 @@ export interface ITaskResponse {
     categoryId?: number;
 }
 
-export interface ITask extends Omit<ITaskResponse, 'categoryId'> {
+export interface ITask extends ITaskResponse {
     categoryName?: string;
+}
+
+export interface ITaskRequest extends Omit<ITaskResponse, 'id'> {
+    id?: number
 }
 
 export interface ICategoryResponse {
@@ -16,3 +20,8 @@ export interface ICategoryResponse {
 }
 
 export interface ICategory extends ICategoryResponse { }
+
+export interface SelectOption {
+    label: string;
+    value: number;
+}

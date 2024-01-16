@@ -18,9 +18,11 @@
     background: var(--color-white-secondary);
     box-shadow: 0px 8px 24px var(--color-background-shadow);
     border-radius: 4px;
-    display: flex;
-    flex-direction: column;
     padding: 5px 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-content: space-around;
 }
 
 .header {
@@ -46,17 +48,13 @@
     height: 24px;
 }
 
-.row1 {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    align-content: space-around;
-    height: 100%;
+.halfContainer {
+    width: 364px;
 }
 
 .inputBox {
     position: relative;
-
+    width: 100%;
 }
 
 .label {
@@ -71,11 +69,10 @@
     text-align: left;
     color: var(--color-blue);
     background: var(--color-white-secondary);
-    
 }
 
 .input {
-    width: 354px;
+    width: calc(100% - 14px);
     height: 46px;
     border-radius: 4px;
     font-family: Roboto;
@@ -92,21 +89,34 @@
 
 .requireInput {
     color: var(--color-red);
-
 }
 
 .actions {
-    width: 752px;
+    width: 100%;
     height: 46px;
     display: flex;
     justify-content: flex-end;
-    align-self: flex-end;
     gap: 24px
 }
 
+.fullContainer {
+    width: 752px;
+}
+
 .description {
-    width: 742px;
+    width: calc(100% - 14px);
     height: 72px;
+    border-radius: 4px;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 400;
+    vertical-align: top;
+    line-height: 46px;
+    letter-spacing: 0em;
+    text-align: left;
+    background: inherit;
+    border: 2px solid var(--color-blue);
+    padding: 0 5px;
     resize: none;
 }
 

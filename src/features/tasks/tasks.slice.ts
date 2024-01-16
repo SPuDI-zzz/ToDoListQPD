@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ITask } from "../../interfaces/interfaces";
+import { ITaskResponse } from "../../interfaces/interfaces";
 import { tasksApi } from "../../app/services/tasks.api";
 
 interface InitialState {
-    tasks: ITask[] | null
+    tasks: ITaskResponse[] | null
 }
 
 const initialState: InitialState = {

@@ -8,13 +8,14 @@ const Tasks = () => {
     const {isLoading: isLoadingTasks, data: tasksResponse} = useGetTasksQuery();
     const {isLoading: isLoadingCategories, data: categoriesResponse} = useGetCategoriesQuery();
 
-    const tasks = tasksResponse?.map((task):ITask => {
+    const tasks = tasksResponse?.map(task=> {
         const categoryName = categoriesResponse?.find(category => category.id === task.categoryId)?.name;
                 
         return {
             id: task.id,
             name: task.name,
             description: task.description,
+            categoryId: task.categoryId,
             categoryName: categoryName,
         }
     });

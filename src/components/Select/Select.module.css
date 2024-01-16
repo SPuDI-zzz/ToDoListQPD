@@ -1,0 +1,95 @@
+@import url(../../constants/constants.module.css);
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: var(--color-blue);
+    background: var(--color-white-secondary);
+}
+
+.select {
+    width: calc(100% - 14px);
+    height: 46px;
+    border-radius: 4px;
+    font-family: Roboto;
+    line-height: 46px;
+    font-size: 20px;
+    font-weight: 400;
+    vertical-align: top;
+    letter-spacing: 0em;
+    text-align: left;
+    background: inherit;
+    border: 2px solid var(--color-blue);
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.select:focus {
+    border-color: black;
+}
+
+.dropDownArrow {
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4L8 12L16 4H0Z' fill='%233F72AF'/%3E%3C/svg%3E%0A");
+    width: 16px;
+    height: 16px; 
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    margin: 9px;
+}
+
+.options {
+    display: none;
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 25px;
+    border: 2px solid var(--color-blue);
+    border-radius: 4px;
+    width: calc(100% - 4px);
+    position: absolute;
+    left: 0;
+    top: calc(100% + 4px);
+    z-index: 100;
+    background-color: var(--color-white-secondary);
+    
+}
+
+.options.show {
+    display: block;
+}
+
+.option {
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.option.selected {
+    background: var(--color-blue-light);
+}
+
+.option:hover {
+    background: var(--color-white-primary);
+}
+
+.value {
+    flex-grow: 1;
+}
+
+.placeholder {
+    flex-grow: 1;
+    color: var(--color-grey);
+}

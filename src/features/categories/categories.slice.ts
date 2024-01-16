@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { categoriesApi } from "../../app/services/categories.api";
-import { ICategory } from "../../interfaces/interfaces";
+import { ICategoryResponse } from "../../interfaces/interfaces";
 
 interface InitialState {
-    categories: ICategory[] | null
+    categories: ICategoryResponse[] | null
 }
 
 const initialState: InitialState = {
