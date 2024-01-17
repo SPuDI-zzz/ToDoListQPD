@@ -1,0 +1,78 @@
+@import url(../../constants/constants.module.css);
+
+.body {
+    position: fixed;
+    background: var(--color-background-modal-panel);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+	left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 800px;
+    height: 366px;
+    background: var(--color-white-secondary);
+    box-shadow: 0px 8px 24px var(--color-background-shadow);
+    border-radius: 4px;
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+.halfContainer {
+    width: 364px;
+}
+
+.fullContainer {
+    width: 752px;
+}
+
+.actions {
+    width: 752px;
+    height: 46px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 24px
+}
+
+.btnCreate {
+    width: 200px;
+    height: 46px;
+    border-radius: 4px;
+    background: var(--color-blue);
+    border: 2px solid var(--color-blue);
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 0;
+}
+
+.btnClose {
+    width: 120px;
+    height: 46px;
+    border-radius: 4px;
+    background: var(--color-white-primary);
+    border: 2px solid var(--color-blue);
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 400;
+    
+    padding: 0;
+    letter-spacing: 0em;
+    text-align: center;
+    color: var(--color-blue);
+}
+
+.btnCreate:hover,
+.btnClose:hover {
+    cursor: pointer;
+}

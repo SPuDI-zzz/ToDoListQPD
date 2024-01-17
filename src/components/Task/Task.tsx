@@ -1,12 +1,25 @@
 import React, { FC } from 'react';
 import styles from './Task.module.css'
-import { ITask } from '../../interfaces/interfaces';
+import { ITask, ITaskRequest } from '../../interfaces/interfaces';
+import { useDispatch } from 'react-redux';
+import { setCreateTaskModal, setDeleteTaskModal, setEditTaskModal } from '../../features/modals/modals.slice';
+import { MODAL_STATE } from '../../constants/constants';
 
 export interface TaskProps {
     task: ITask;
 }
 
 const Task: FC<TaskProps> = ({task}) => {
+    const dispatch = useDispatch();
+
+    const editHandler = () => {
+        dispatch(setEditTaskModal(task));
+    }
+
+    const deleteHandler = () => {
+        dispatch(setDeleteTaskModal(task));
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.leftBlock}>
@@ -28,8 +41,16 @@ const Task: FC<TaskProps> = ({task}) => {
                 </div>
             </div>
             <div className={styles.rightBlock}>
-                <div className={styles.edit}></div>
-                <div className={styles.delete}></div>
+                <button 
+                    type='button'
+                    onClick={editHandler}
+                    className={styles.btnEdit}>        
+                </button>
+                <button 
+                    type='button'
+                    onClick={deleteHandler}
+                    className={styles.btnDelete}>
+                </button>
             </div>
         </div>
     );

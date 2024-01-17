@@ -8,28 +8,54 @@ export const tasksApi = api.injectEndpoints({
                 url: '/GetTasks',
                 method: 'GET',
             }),
-            providesTags: () => [{
+            providesTags: () => [{ 
                 type: 'Tasks'
-            }]
+            }],
         }),
-        addTasks: builder.mutation<ITaskResponse, ITaskRequest>({
+        addTask: builder.mutation<ITaskResponse, ITaskRequest>({
             query: (task) => ({
                 url: '/AddTask',
                 method: 'POST',
                 body: task
-            })
-        })
+            }),
+            invalidatesTags: () => [{
+                type: 'Tasks'
+            }]
+        }),
+        updateTask: builder.mutation<ITaskResponse, ITaskRequest>({
+            query: (task) => ({
+                url: '/UpdateTask',
+                method: 'POST',
+                body: task
+            }),
+            invalidatesTags: () => [{
+                type: 'Tasks'
+            }]
+        }),
+        deleteTask: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `/RemoveTask/${id}`,
+                method: 'GET',
+            }),
+            invalidatesTags: () => [{
+                type: 'Tasks'
+            }]
+        }),
     })
 });
 
 export const {
     useGetTasksQuery,
-    useAddTasksMutation,
+    useAddTaskMutation,
+    useUpdateTaskMutation,
+    useDeleteTaskMutation,
 } = tasksApi;
 
 export const {
     endpoints: {
         getTasks,
-        addTasks,
+        addTask,
+        updateTask,
+        deleteTask,
     }
 } = tasksApi
