@@ -13,9 +13,7 @@ const initialState: InitialState = {
 const slice = createSlice({
     name: 'categories',
     initialState,
-    reducers: {
-        
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addMatcher(categoriesApi.endpoints.getCategories.matchFulfilled, (state, action) => {
             state.categories = action.payload;

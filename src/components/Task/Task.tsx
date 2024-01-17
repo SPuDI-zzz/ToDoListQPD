@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import styles from './Task.module.css'
-import { ITask, ITaskRequest } from '../../interfaces/interfaces';
+import { ITask } from '../../interfaces/interfaces';
 import { useDispatch } from 'react-redux';
-import { setCreateTaskModal, setDeleteTaskModal, setEditTaskModal } from '../../features/modals/modals.slice';
-import { MODAL_STATE } from '../../constants/constants';
+import { setDeleteTaskModal, setEditTaskModal } from '../../features/modals/modals.slice';
 
 export interface TaskProps {
     task: ITask;
@@ -28,12 +27,11 @@ const Task: FC<TaskProps> = ({task}) => {
                         <p title={task.name} className={styles.taskName}>{task.name}</p>
                     </div>
                     {
-                        task.categoryName ?
+                        task.categoryName &&
                             <div className={styles.category}>
                                 <div className={styles.directory} />
                                 <p title={task.categoryName} className={styles.categoryName}>{task.categoryName}</p>
-                            </div> :
-                            ''
+                            </div>
                     }
                 </div>
                 <div className={styles.description}>

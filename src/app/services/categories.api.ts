@@ -19,7 +19,7 @@ export const categoriesApi = api.injectEndpoints({
                 body: category
             }),
             invalidatesTags: () => [{
-                type: 'Tasks'
+                type: 'Categories'
             }]
         }),
         updateCategory: builder.mutation<ICategoryResponse, ICategoryRequest>({
@@ -29,16 +29,16 @@ export const categoriesApi = api.injectEndpoints({
                 body: category
             }),
             invalidatesTags: () => [{
-                type: 'Tasks'
+                type: 'Categories'
             }]
         }),
         deleteCategory: builder.mutation<void, number>({
             query: (id) => ({
                 url: `/RemoveCategory/${id}`,
-                method: 'POST',
+                method: 'GET',
             }),
             invalidatesTags: () => [{
-                type: 'Tasks'
+                type: 'Categories'
             }]
         }),
     })
@@ -50,9 +50,3 @@ export const {
     useUpdateCategoryMutation,
     useDeleteCategoryMutation,
 } = categoriesApi;
-
-export const {
-    endpoints: {
-        getCategories,
-    }
-} = categoriesApi

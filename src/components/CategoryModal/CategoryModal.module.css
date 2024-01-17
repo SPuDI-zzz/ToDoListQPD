@@ -25,10 +25,6 @@
     align-content: space-around;
 }
 
-.halfContainer {
-    width: 364px;
-}
-
 .fullContainer {
     width: 752px;
 }
@@ -41,7 +37,7 @@
     gap: 24px
 }
 
-.btnCreate {
+.btnSubmit {
     width: 200px;
     height: 46px;
     border-radius: 4px;
@@ -65,14 +61,13 @@
     font-family: Roboto;
     font-size: 20px;
     font-weight: 400;
-    
     padding: 0;
     letter-spacing: 0em;
     text-align: center;
     color: var(--color-blue);
 }
 
-.btnCreate:hover,
+.btnSubmit:hover,
 .btnClose:hover {
     cursor: pointer;
 }

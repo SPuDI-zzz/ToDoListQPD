@@ -39,12 +39,11 @@ const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText,
         return () => {
             document.body.style.overflow = 'auto'
         };
-    }, []);
+    }, [categories, task.categoryId]);
 
     const submitHandler = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        task.categoryId = selectValue?.value
-
+        debugger;
         onFormSubmit(task)
             .then(() => closeHandler());
     }
@@ -54,6 +53,15 @@ const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText,
             ...task, 
             [target.name]: target.value
         });
+    }
+
+    const onChangeSelect = (option?: SelectOption) => {
+        setTask({
+            ...task, 
+            categoryId: option?.value
+        });
+
+        setSelectValue(option);
     }
 
     return (
@@ -80,7 +88,7 @@ const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText,
                                 {label: category.name, value: category.id}
                             ))
                         } 
-                        onChange={option => setSelectValue(option)} 
+                        onChange={onChangeSelect} 
                     />
                 </div>
                 <div className={styles.fullContainer}>
@@ -91,7 +99,7 @@ const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText,
                     />
                 </div>
                 <div className={styles.actions}>
-                    <button type='submit' className={styles.btnCreate}>{btnSubmitText}</button>
+                    <button type='submit' className={styles.btnSubmit}>{btnSubmitText}</button>
                     <button type='button' className={styles.btnClose} onClick={closeHandler}>Закрыть</button>
                 </div>
             </form>

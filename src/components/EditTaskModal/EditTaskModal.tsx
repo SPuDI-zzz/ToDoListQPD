@@ -6,8 +6,8 @@ import { DEFAULT_TASK } from '../../constants/constants';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 const EditTaskModal = () => {
-    const { task } = useTypedSelector(state => state.modals)
-    const [editTask, setEditTask] = useState<ITaskRequest>(task ? task : DEFAULT_TASK);
+    const { task } = useTypedSelector(state => state.modals);
+    const [editTask, setEditTask] = useState<ITaskRequest>(task ?? DEFAULT_TASK);
     const [updateTask] = useUpdateTaskMutation();
 
     const updateTaskHandler = async (task: ITaskRequest) => {
@@ -15,14 +15,17 @@ const EditTaskModal = () => {
     }
 
     return (
-        task &&
-            <TaskModal 
-                headerText={'Редактирование задачи'} 
-                task={editTask}
-                setTask={setEditTask}
-                btnSubmitText={'Сохранить'}
-                onFormSubmit={updateTaskHandler}
-            />
+        <>
+            {task &&
+                <TaskModal 
+                    headerText={'Редактирование задачи'} 
+                    task={editTask}
+                    setTask={setEditTask}
+                    btnSubmitText={'Сохранить'}
+                    onFormSubmit={updateTaskHandler}
+                />
+            }
+        </>
     );
 };
 

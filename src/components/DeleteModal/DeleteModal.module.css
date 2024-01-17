@@ -136,8 +136,8 @@
     resize: none;
 }
 
-.btnCreate {
-    width: 200px;
+.btnSubmit {
+    width: 120px;
     height: 46px;
     border-radius: 4px;
     background: var(--color-blue);
@@ -147,7 +147,7 @@
     font-weight: 400;
     letter-spacing: 0em;
     text-align: center;
-    color: #FFFFFF;
+    color: var(--color-white-primary);
     padding: 0;
 }
 
@@ -160,13 +160,13 @@
     font-family: Roboto;
     font-size: 20px;
     font-weight: 400;
-    
     padding: 0;
     letter-spacing: 0em;
     text-align: center;
     color: var(--color-blue);
 }
 
-.close:hover, .btnCreate:hover, .btnClose:hover {
+.btnSubmit:hover,
+.btnClose:hover {
     cursor: pointer;
 }

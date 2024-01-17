@@ -22,9 +22,9 @@ const Category:FC<TCategoryProps> = ({category}) => {
     return (
         <div className={styles.container}>
             <div className={styles.leftBlock}>
-                <div className={styles.taskContainer}>
-                    <div className={styles.task}>
-                        <p title={category.name} className={styles.taskName}>{category.name}</p>
+                <div className={styles.categoryContainer}>
+                    <div className={styles.category}>
+                        <p title={category.name} className={styles.categoryName}>{category.name}</p>
                     </div>
                 </div>
                 <div className={styles.description}>

@@ -3,21 +3,18 @@ import { useGetCategoriesQuery } from '../../app/services/categories.api';
 import Category from '../Category/Category';
 
 const Categories = () => {  
-    const {isLoading, data: categories } = useGetCategoriesQuery(undefined, {pollingInterval: 10000});
+    const {isLoading, data: categories } = useGetCategoriesQuery();
 
     return (
         <>
             {isLoading ? 
                 <div>Loading...</div> : 
-                    categories ?
-                        categories.map(
-                            category => 
-                                <Category 
-                                    key={category.id}
-                                    category={category}
-                                />
-                        ) :
-                        ''
+                categories?.map(category => 
+                    <Category 
+                        key={category.id}
+                        category={category}
+                    />
+                )
             }
         </>
     );

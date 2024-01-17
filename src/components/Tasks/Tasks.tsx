@@ -10,7 +10,7 @@ const Tasks = () => {
 
     const tasks = tasksResponse?.map(task=> {
         const categoryName = categoriesResponse?.find(category => category.id === task.categoryId)?.name;
-                
+
         return {
             id: task.id,
             name: task.name,
@@ -24,14 +24,12 @@ const Tasks = () => {
         <>
             {isLoadingTasks || isLoadingCategories ? 
                 <div>Loading...</div> :
-                    tasks ? tasks.map(
-                        task => 
-                            <Task 
-                                key={task.id} 
-                                task={task}
-                            />
-                        ) :
-                        ''
+                tasks?.map(task => 
+                    <Task 
+                        key={task.id} 
+                        task={task}
+                    />
+                )
             }
         </>
     );

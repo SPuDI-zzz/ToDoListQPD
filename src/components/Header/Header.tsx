@@ -15,14 +15,13 @@ const Header: FC<HeaderProps> = ({buttonText, onButtonClick}) => {
                     <h1 className={styles.toDoList}>ToDo List</h1>
                     <Nav />
                 </div>
-                { onButtonClick ?
-                    <button 
-                        type='button' 
-                        onClick={() => onButtonClick?.()}
-                        className={styles.btnPrimary}>
-                        {buttonText}
-                    </button> : 
-                ''}        
+                <button 
+                    type='button' 
+                    onClick={() => onButtonClick?.()}
+                    className={styles.btnPrimary}
+                >
+                    {buttonText}
+                </button>  
             </div>
         </header>  
     );

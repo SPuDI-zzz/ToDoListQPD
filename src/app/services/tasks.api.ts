@@ -50,12 +50,3 @@ export const {
     useUpdateTaskMutation,
     useDeleteTaskMutation,
 } = tasksApi;
-
-export const {
-    endpoints: {
-        getTasks,
-        addTask,
-        updateTask,
-        deleteTask,
-    }
-} = tasksApi

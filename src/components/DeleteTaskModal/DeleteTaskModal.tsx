@@ -12,14 +12,16 @@ const DeleteTaskModal = () => {
     }
 
     return (
-        task && task.id ?
-            <DeleteModal 
-                headerText={'Удаление задачи'}
-                id={task.id}
-                messageText={`Вы уверены, что хотите удалить категорию “${task.name}”?`}
-                onFormSubmit={deleteTaskHandler} 
-            /> :
-            ''
+        <>
+            {task && task.id &&
+                <DeleteModal 
+                    headerText={'Удаление задачи'}
+                    id={task.id}
+                    messageText={`Вы уверены, что хотите удалить категорию “${task.name}”?`}
+                    onFormSubmit={deleteTaskHandler} 
+                />
+            }
+        </>
     );
 };
 

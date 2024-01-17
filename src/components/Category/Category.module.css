@@ -15,8 +15,7 @@
     width: 50%;
 }
 
-
-.taskContainer {
+.categoryContainer {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -31,28 +30,7 @@
     padding-right: 24px;
 }
 
-.category {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    height: 24px;
-}
-
 .categoryName {
-    --max-lines: 1;
-    --line-height: 24px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: var(--line-height);
-    letter-spacing: 0em;
-    text-align: left;
-    color: var(--color-blue);
-    height: calc(var(--max-lines) * var(--line-height));
-    overflow: hidden;
-}
-
-.taskName {
     --max-lines: 1;
     --line-height: 20px;
     font-family: Roboto;
@@ -66,7 +44,7 @@
     overflow: hidden;
 }
 
-.task {
+.category {
     display: flex;
     align-items: center;
     height: 32px;

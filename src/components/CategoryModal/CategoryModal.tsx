@@ -68,7 +68,7 @@ const CategoryModal:FC<CategoryModalProps> = ({headerText, category, setCategory
                     />
                 </div>
                 <div className={styles.actions}>
-                    <button type='submit' className={styles.btnCreate}>{btnSubmitText}</button>
+                    <button type='submit' className={styles.btnSubmit}>{btnSubmitText}</button>
                     <button type='button' className={styles.btnClose} onClick={closeHandler}>Закрыть</button>
                 </div>
             </form>

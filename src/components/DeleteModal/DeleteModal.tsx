@@ -1,8 +1,9 @@
 import React, { FC, FormEvent } from 'react';
 import styles from './DeleteModal.module.css'
-import { ICategoryRequest, ITaskRequest } from '../../interfaces/interfaces';
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../../features/modals/modals.slice';
+import Header from '../Header/Header';
+import HeaderModal from '../HeaderModal/HeaderModal';
 
 interface DeleteModalProps {
     headerText: string;
@@ -22,11 +23,6 @@ const DeleteModal:FC<DeleteModalProps> = ({headerText, id, messageText, onFormSu
     const submitHandler = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if(!id) {
-            closeHandler();
-            return;
-        }
-
         onFormSubmit(id)
             .then(() => closeHandler());            
     }
@@ -35,17 +31,17 @@ const DeleteModal:FC<DeleteModalProps> = ({headerText, id, messageText, onFormSu
         <div className={styles.body}>
             <form onSubmit={submitHandler} className={styles.container}>
                 <div className={styles.fullContainer}>
-                    <div className={styles.header}>
-                        <p className={styles.headerText}>{headerText}</p>
-                        <div onClick={closeHandler} className={styles.close}></div>
-                    </div>
+                    <HeaderModal
+                        headerText={headerText}
+                        closeHandler={closeHandler}
+                    />
                 </div>
                 <div className={styles.fullContainer}>
                     <p title={messageText} className={styles.messageText}>{messageText}</p>
                 </div>
                 <div className={styles.fullContainer}>
                     <div className={styles.actions}>
-                        <button type='submit' className={styles.btnCreate}>Да</button>
+                        <button type='submit' className={styles.btnSubmit}>Да</button>
                         <button type='button' className={styles.btnClose} onClick={closeHandler}>Нет</button>
                     </div>
                 </div>
