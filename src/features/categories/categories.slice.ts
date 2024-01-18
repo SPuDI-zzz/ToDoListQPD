@@ -21,5 +21,4 @@ const slice = createSlice({
     },
 })
 
-export const { actions, reducer } = slice;
 export default slice.reducer;

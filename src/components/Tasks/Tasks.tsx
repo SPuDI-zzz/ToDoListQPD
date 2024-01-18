@@ -1,24 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ITask } from '../../interfaces/interfaces';
 import Task from '../Task/Task';
 import { useGetTasksQuery } from '../../app/services/tasks.api';
 import { useGetCategoriesQuery } from '../../app/services/categories.api';
 
 const Tasks = () => {
+    const [tasks, setTasks] = useState<ITask[] | undefined>(undefined);
     const {isLoading: isLoadingTasks, data: tasksResponse} = useGetTasksQuery();
     const {isLoading: isLoadingCategories, data: categoriesResponse} = useGetCategoriesQuery();
 
-    const tasks = tasksResponse?.map(task=> {
-        const categoryName = categoriesResponse?.find(category => category.id === task.categoryId)?.name;
+    useEffect(() => {
+        if (isLoadingTasks || isLoadingCategories)
+            return;
 
-        return {
-            id: task.id,
-            name: task.name,
-            description: task.description,
-            categoryId: task.categoryId,
-            categoryName: categoryName,
-        } as ITask
-    });
+        setTasks(tasksResponse?.map<ITask>(task => {
+            const categoryName = task.categoryId ? 
+                categoriesResponse?.find(category => category.id === task.categoryId)?.name : 
+                undefined;
+    
+            return {
+                id: task.id,
+                name: task.name,
+                description: task.description,
+                categoryId: task.categoryId,
+                categoryName: categoryName,
+            } as ITask
+        }));
+    }, [tasksResponse, categoriesResponse, setTasks, isLoadingTasks, isLoadingCategories]);
     
     return (
         <>

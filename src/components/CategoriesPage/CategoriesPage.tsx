@@ -3,12 +3,11 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Categories from '../Categories/Categories';
 import { MODAL_STATE } from '../../constants/constants';
-import { setCreateCategoryModal } from '../../features/modals/modals.slice';
-import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
 import CreateCategory from '../CreateCategoryModal/CreateCategoryModal';
 import EditCategory from '../EditCategoryModal/EditCategoryModal';
 import DeleteCategory from '../DeleteCategoryModal/DeleteCategoryModal';
+import { useActions } from '../../hooks/useActions';
+import { useModals } from '../../hooks/useModals';
 
 const modals = new Map<string, JSX.Element | null>([
     [MODAL_STATE.CREATE, <CreateCategory />],
@@ -18,10 +17,10 @@ const modals = new Map<string, JSX.Element | null>([
 ]);
 
 const CategoriesPage = () => {
-    const { modalState } = useTypedSelector(state => state.modals)
-    const dispatch = useDispatch();
+    const { modalState } = useModals();
+    const { setCreateCategoryModal } = useActions();
 
-    const addCategoryHandler = () => dispatch(setCreateCategoryModal());
+    const addCategoryHandler = () => setCreateCategoryModal();
     return (
         <>
             <Header buttonText='Добавить категорию' onButtonClick={addCategoryHandler}/>

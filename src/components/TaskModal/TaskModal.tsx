@@ -1,13 +1,12 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import styles from './TaskModal.module.css'
-import { useDispatch } from 'react-redux';
-import { closeModal } from '../../features/modals/modals.slice';
 import { ITaskRequest, SelectOption } from '../../interfaces/interfaces';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Select from '../Select/Select';
 import HeaderModal from '../HeaderModal/HeaderModal';
 import InputNameModal from '../InputNameModal/InputModal';
 import TextAreaModal from '../TextAreaModal/TextAreaModal';
+import { useActions } from '../../hooks/useActions';
+import { useCategories } from '../../hooks/useCategories';
 
 interface TaskModalProps {
     headerText: string;
@@ -19,19 +18,19 @@ interface TaskModalProps {
 
 const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText, onFormSubmit}) => {
     const [selectValue, setSelectValue] = useState<SelectOption | undefined>(undefined);
-    const { categories } = useTypedSelector(state => state.categories);
-    const dispatch = useDispatch();
-
-    const closeHandler = () => {
-        dispatch(closeModal());
-    }
+    const { categories } = useCategories();
+    const {closeModal, } = useActions();
+    const closeHandler = () => closeModal();
+    
 
     useEffect(() => {
         if (task.categoryId && categories) {
-            const categoryName = categories?.find(category => category.id === task.categoryId)?.name;
+            const categoryName = categories.find(category => category.id === task.categoryId)?.name;
             
             categoryName &&
-                setSelectValue({value: task.categoryId, label: categoryName});
+                setSelectValue({
+                    value: task.categoryId, label: categoryName
+                } as SelectOption);
         }
 
         document.body.style.overflow = 'hidden';
@@ -43,7 +42,7 @@ const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText,
 
     const submitHandler = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        debugger;
+
         onFormSubmit(task)
             .then(() => closeHandler());
     }

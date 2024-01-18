@@ -1,9 +1,7 @@
 import React, { FC, FormEvent } from 'react';
 import styles from './DeleteModal.module.css'
-import { useDispatch } from 'react-redux';
-import { closeModal } from '../../features/modals/modals.slice';
-import Header from '../Header/Header';
 import HeaderModal from '../HeaderModal/HeaderModal';
+import { useActions } from '../../hooks/useActions';
 
 interface DeleteModalProps {
     headerText: string;
@@ -14,11 +12,9 @@ interface DeleteModalProps {
 
 
 const DeleteModal:FC<DeleteModalProps> = ({headerText, id, messageText, onFormSubmit}) => {
-    const dispatch = useDispatch();
+    const { closeModal } = useActions();
 
-    const closeHandler = () => {
-        dispatch(closeModal());
-    }
+    const closeHandler = () => closeModal();
 
     const submitHandler = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();

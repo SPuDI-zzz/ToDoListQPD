@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { MODAL_STATE } from "../../constants/constants";
-import { ICategoryRequest, ICategoryResponse, ITask, ITaskRequest } from "../../interfaces/interfaces";
+import { ICategoryRequest, ITaskRequest } from "../../interfaces/interfaces";
 
 interface InitialState {
     modalState: MODAL_STATE;
@@ -46,14 +46,6 @@ const slice = createSlice({
     }
 });
 
-export const { 
-    setCreateTaskModal,
-    setEditTaskModal,
-    setDeleteTaskModal,
-    setCreateCategoryModal,
-    setEditCategoryModal,
-    setDeleteCategoryModal,
-    closeModal
-} = slice.actions;
+export const { actions } = slice;
 
 export default slice.reducer;

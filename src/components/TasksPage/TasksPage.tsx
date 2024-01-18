@@ -3,12 +3,11 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Tasks from '../Tasks/Tasks';
 import CreateTask from '../CreateTaskModal/CreateTaskModal';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { useDispatch } from 'react-redux';
-import { setCreateTaskModal } from '../../features/modals/modals.slice';
 import { MODAL_STATE } from '../../constants/constants';
 import EditTask from '../EditTaskModal/EditTaskModal';
 import DeleteTask from '../DeleteTaskModal/DeleteTaskModal';
+import { useActions } from '../../hooks/useActions';
+import { useModals } from '../../hooks/useModals';
 
 const modals = new Map<string, JSX.Element | null>([
     [MODAL_STATE.CREATE, <CreateTask />],
@@ -18,10 +17,10 @@ const modals = new Map<string, JSX.Element | null>([
 ]);
 
 const TasksPage = () => {
-    const { modalState } = useTypedSelector(state => state.modals)
-    const dispatch = useDispatch();
+    const { modalState } = useModals();
+    const { setCreateTaskModal } = useActions();
 
-    const addTaskHandler = () => dispatch(setCreateTaskModal());
+    const addTaskHandler = () => setCreateTaskModal();
 
     return (
         <>

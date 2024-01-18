@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { DEFAULT_CATEGORY } from '../../constants/constants';
 import CategoryModal from '../CategoryModal/CategoryModal';
 import { useUpdateCategoryMutation } from '../../app/services/categories.api';
 import { ICategoryRequest } from '../../interfaces/interfaces';
+import { useModals } from '../../hooks/useModals';
 
 const EditCategoryModal = () => {
-    const { category } = useTypedSelector(state => state.modals);
+    const { category } = useModals();
     const [editCategory, setEditCategory] = useState<ICategoryRequest>(category ?? DEFAULT_CATEGORY);
     const [updateCategory] = useUpdateCategoryMutation();
 

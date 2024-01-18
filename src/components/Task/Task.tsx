@@ -1,23 +1,18 @@
 import React, { FC } from 'react';
 import styles from './Task.module.css'
 import { ITask } from '../../interfaces/interfaces';
-import { useDispatch } from 'react-redux';
-import { setDeleteTaskModal, setEditTaskModal } from '../../features/modals/modals.slice';
+import { useActions } from '../../hooks/useActions';
 
 export interface TaskProps {
     task: ITask;
 }
 
 const Task: FC<TaskProps> = ({task}) => {
-    const dispatch = useDispatch();
+    const {setEditTaskModal, setDeleteTaskModal} = useActions();
 
-    const editHandler = () => {
-        dispatch(setEditTaskModal(task));
-    }
+    const editHandler = () => setEditTaskModal(task);
 
-    const deleteHandler = () => {
-        dispatch(setDeleteTaskModal(task));
-    }
+    const deleteHandler = () => setDeleteTaskModal(task);
 
     return (
         <div className={styles.container}>

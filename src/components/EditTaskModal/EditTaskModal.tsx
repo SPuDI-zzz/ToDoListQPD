@@ -3,10 +3,10 @@ import TaskModal from '../TaskModal/TaskModal';
 import { useUpdateTaskMutation } from '../../app/services/tasks.api';
 import { ITaskRequest } from '../../interfaces/interfaces';
 import { DEFAULT_TASK } from '../../constants/constants';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useModals } from '../../hooks/useModals';
 
 const EditTaskModal = () => {
-    const { task } = useTypedSelector(state => state.modals);
+    const { task } = useModals();
     const [editTask, setEditTask] = useState<ITaskRequest>(task ?? DEFAULT_TASK);
     const [updateTask] = useUpdateTaskMutation();
 

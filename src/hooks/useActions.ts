@@ -1,10 +1,10 @@
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useMemo } from "react";
 import { useDispatch } from "react-redux"
-import { actions } from '../features/tasks/tasks.slice'
+import { actions as modalsActions } from '../features/modals/modals.slice'
 
 const rootActions = {
-    ...actions
+    ...modalsActions
 }
 
 export const useActions = () => {

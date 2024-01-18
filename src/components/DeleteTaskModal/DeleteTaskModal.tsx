@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DeleteModal from '../DeleteModal/DeleteModal';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDeleteTaskMutation } from '../../app/services/tasks.api';
+import { useModals } from '../../hooks/useModals';
 
 const DeleteTaskModal = () => {
-    const { task } = useTypedSelector(state => state.modals)
+    const { task } = useModals();
     const [deleteTask] = useDeleteTaskMutation();
 
     const deleteTaskHandler = async (id: number) => {
@@ -13,7 +13,7 @@ const DeleteTaskModal = () => {
 
     return (
         <>
-            {task && task.id &&
+            {task?.id &&
                 <DeleteModal 
                     headerText={'Удаление задачи'}
                     id={task.id}

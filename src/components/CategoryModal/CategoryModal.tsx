@@ -2,10 +2,9 @@ import React, { ChangeEvent, FC, FormEvent, useEffect } from 'react';
 import styles from './CategoryModal.module.css';
 import HeaderModal from '../HeaderModal/HeaderModal';
 import { ICategoryRequest } from '../../interfaces/interfaces';
-import { useDispatch } from 'react-redux';
-import { closeModal } from '../../features/modals/modals.slice';
 import InputNameModal from '../InputNameModal/InputModal';
 import TextAreaModal from '../TextAreaModal/TextAreaModal';
+import { useActions } from '../../hooks/useActions';
 
 interface CategoryModalProps {
     headerText: string;
@@ -16,11 +15,9 @@ interface CategoryModalProps {
 }
 
 const CategoryModal:FC<CategoryModalProps> = ({headerText, category, setCategory, btnSubmitText, onFormSubmit}) => {
-    const dispatch = useDispatch();
+    const { closeModal } = useActions();
 
-    const closeHandler = () => {
-        dispatch(closeModal());
-    }
+    const closeHandler = () => closeModal();
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';

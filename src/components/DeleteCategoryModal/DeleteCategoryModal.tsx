@@ -1,13 +1,14 @@
 import React from 'react';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import { useDeleteCategoryMutation } from '../../app/services/categories.api';
 import { useUpdateTaskMutation } from '../../app/services/tasks.api';
 import { ITaskRequest } from '../../interfaces/interfaces';
+import { useModals } from '../../hooks/useModals';
+import { useTasks } from '../../hooks/useTasks';
 
 const DeleteCategoryModal = () => {
-    const { category } = useTypedSelector(state => state.modals)
-    const { tasks } = useTypedSelector(state => state.tasks)
+    const { category } = useModals();
+    const { tasks } = useTasks();
     const [deleteCategory] = useDeleteCategoryMutation();
     const [editTask] = useUpdateTaskMutation()
 

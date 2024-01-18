@@ -1,23 +1,18 @@
 import React, { FC } from 'react';
 import styles from './Category.module.css'
 import { ICategory } from '../../interfaces/interfaces';
-import { useDispatch } from 'react-redux';
-import { setDeleteCategoryModal, setEditCategoryModal } from '../../features/modals/modals.slice';
+import { useActions } from '../../hooks/useActions';
 
 export interface TCategoryProps {
     category: ICategory;
 }
 
 const Category:FC<TCategoryProps> = ({category}) => {
-    const dispatch = useDispatch();
+    const {setEditCategoryModal, setDeleteCategoryModal} = useActions();
 
-    const editHandler = () => {
-        dispatch(setEditCategoryModal(category));
-    }
+    const editHandler = () => setEditCategoryModal(category);
 
-    const deleteHandler = () => {
-        dispatch(setDeleteCategoryModal(category));
-    }
+    const deleteHandler = () => setDeleteCategoryModal(category);
 
     return (
         <div className={styles.container}>
