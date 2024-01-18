@@ -15,17 +15,22 @@ const DeleteCategoryModal = () => {
     const deleteCategoryHandler = async (id: number) => {
         const task = tasks?.find(task => task.categoryId === id);
 
+        if (!task) {
+            await deleteCategory(id).unwrap();
+            return;
+        }
+
         const taskRequest = {
-            id: task?.id,
-            name: task?.name,
-            description: task?.description,
+            id: task.id,
+            name: task.name,
+            description: task.description,
             categoryId: undefined,
         } as ITaskRequest
-        
+
         await Promise.all([
+            editTask(taskRequest).unwrap(),
             deleteCategory(id).unwrap(),
-            editTask(taskRequest).unwrap()
-        ]);
+        ]);        
     }
     
     return (

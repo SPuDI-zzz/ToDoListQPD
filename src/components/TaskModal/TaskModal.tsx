@@ -19,9 +19,9 @@ interface TaskModalProps {
 const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText, onFormSubmit}) => {
     const [selectValue, setSelectValue] = useState<SelectOption | undefined>(undefined);
     const { categories } = useCategories();
-    const {closeModal, } = useActions();
+    const { closeModal } = useActions();
+
     const closeHandler = () => closeModal();
-    
 
     useEffect(() => {
         if (task.categoryId && categories) {
