@@ -1,4 +1,4 @@
-import React, { FC, FormEvent } from 'react';
+import React, { FC, FormEvent, useEffect } from 'react';
 import styles from './DeleteModal.module.css'
 import HeaderModal from '../HeaderModal/HeaderModal';
 import { useActions } from '../../hooks/useActions';
@@ -13,6 +13,14 @@ interface DeleteModalProps {
 
 const DeleteModal:FC<DeleteModalProps> = ({headerText, id, messageText, onFormSubmit}) => {
     const { closeModal } = useActions();
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = 'auto'
+        };
+    }, []);
 
     const closeHandler = () => closeModal();
 
