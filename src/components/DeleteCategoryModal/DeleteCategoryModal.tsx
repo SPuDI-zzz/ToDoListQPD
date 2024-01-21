@@ -13,7 +13,7 @@ const DeleteCategoryModal = () => {
     const [editTask] = useUpdateTaskMutation()
 
     const deleteCategoryHandler = async (id: number) => {
-        const task = tasks?.find(task => task.categoryId === id);
+        const task = tasks.find(task => task.categoryId === id);
 
         if (!task) {
             await deleteCategory(id).unwrap();

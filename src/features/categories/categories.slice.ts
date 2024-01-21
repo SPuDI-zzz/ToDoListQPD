@@ -3,11 +3,11 @@ import { categoriesApi } from "../../app/services/categories.api";
 import { ICategoryResponse } from "../../interfaces/interfaces";
 
 interface InitialState {
-    categories: ICategoryResponse[] | null
+    categories: ICategoryResponse[]
 }
 
 const initialState: InitialState = {
-    categories: null,
+    categories: [],
 }
 
 const slice = createSlice({

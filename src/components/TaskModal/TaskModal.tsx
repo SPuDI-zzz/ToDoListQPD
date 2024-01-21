@@ -24,7 +24,7 @@ const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText,
     const closeHandler = () => closeModal();
 
     useEffect(() => {
-        if (task.categoryId && categories) {
+        if (task.categoryId) {
             const categoryName = categories.find(category => category.id === task.categoryId)?.name;
             
             categoryName &&

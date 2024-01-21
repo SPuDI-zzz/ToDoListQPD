@@ -3,11 +3,11 @@ import { ITaskResponse } from "../../interfaces/interfaces";
 import { tasksApi } from "../../app/services/tasks.api";
 
 interface InitialState {
-    tasks: ITaskResponse[] | null
+    tasks: ITaskResponse[]
 }
 
 const initialState: InitialState = {
-    tasks: null,
+    tasks: [],
 }
 
 const slice = createSlice({

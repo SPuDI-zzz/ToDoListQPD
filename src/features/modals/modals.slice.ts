@@ -42,6 +42,8 @@ const slice = createSlice({
         },
         closeModal: (state) => {
             state.modalState = MODAL_STATE.CLOSE;
+            state.category = undefined;
+            state.task = undefined;
         }
     }
 });
