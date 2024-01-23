@@ -12,8 +12,6 @@ const InputNameModal:FC<InputNameModalProps> = ({placeholder, value, onChange}) 
         <div className={styles.inputBox}>
             <label className={styles.label}>Имя<span className={styles.requireInput}>*</span></label>
             <input 
-                required
-                maxLength={255}
                 name='name'
                 value={value}
                 onChange={onChange}

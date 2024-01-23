@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
-import TasksPage from './components/TasksPage/TasksPage';
-import CategoriesPage from './components/CategoriesPage/CategoriesPage';
+import TasksPage from './pages/TasksPage/TasksPage';
+import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
 
 const App = () => {
     return (

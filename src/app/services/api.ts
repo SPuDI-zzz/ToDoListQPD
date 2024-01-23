@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { TO_DO_LIST_URL } from '../../constants/constants'
+import { MINUTE, TO_DO_LIST_URL } from '../../constants/constants'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: TO_DO_LIST_URL,
@@ -8,7 +8,7 @@ const baseQuery = fetchBaseQuery({
 export const api = createApi({
     reducerPath: 'splitApi',
     tagTypes: ['Tasks', 'Categories'],
-    refetchOnMountOrArgChange: 30,
+    refetchOnMountOrArgChange: MINUTE * 2,
     baseQuery: baseQuery,
     endpoints: () => ({}),
 });

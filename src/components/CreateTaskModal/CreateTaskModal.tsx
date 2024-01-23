@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ITaskRequest } from '../../interfaces/interfaces';
+import { ITaskRequest, SelectOption } from '../../interfaces/interfaces';
 import { useAddTaskMutation } from '../../app/services/tasks.api';
 import TaskModal from '../TaskModal/TaskModal';
 import { DEFAULT_TASK } from '../../constants/constants';
@@ -12,7 +12,7 @@ const CreateTask = () => {
         await createTask(task).unwrap();
     }
 
-    return (
+    return (     
         <TaskModal 
             headerText={'Создание задачи'} 
             task={task}

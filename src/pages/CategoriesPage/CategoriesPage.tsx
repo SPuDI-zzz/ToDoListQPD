@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '../Header/Header';
-import Main from '../Main/Main';
-import Categories from '../Categories/Categories';
+import Header from '../../components/Header/Header';
+import Main from '../../components/Main/Main';
+import Categories from '../../components/Categories/Categories';
 import { MODAL_STATE } from '../../constants/constants';
-import CreateCategory from '../CreateCategoryModal/CreateCategoryModal';
-import EditCategory from '../EditCategoryModal/EditCategoryModal';
-import DeleteCategory from '../DeleteCategoryModal/DeleteCategoryModal';
+import CreateCategory from '../../components/CreateCategoryModal/CreateCategoryModal';
+import EditCategory from '../../components/EditCategoryModal/EditCategoryModal';
+import DeleteCategory from '../../components/DeleteCategoryModal/DeleteCategoryModal';
 import { useActions } from '../../hooks/useActions';
 import { useModals } from '../../hooks/useModals';
 
