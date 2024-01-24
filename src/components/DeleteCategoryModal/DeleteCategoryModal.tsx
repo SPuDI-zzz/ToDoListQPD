@@ -1,22 +1,27 @@
-import React from 'react';
-import DeleteModal from '../DeleteModal/DeleteModal';
+import React, { FC } from 'react';
 import { useDeleteCategoryMutation } from '../../app/services/categories.api';
-import { useUpdateTaskMutation } from '../../app/services/tasks.api';
-import { ITaskRequest } from '../../interfaces/interfaces';
-import { useModals } from '../../hooks/useModals';
-import { useTasks } from '../../hooks/useTasks';
+import { useGetTasksQuery, useUpdateTaskMutation } from '../../app/services/tasks.api';
+import { ICategoryResponse, ITaskRequest } from '../../interfaces/interfaces';
+import ConfirmDialog from '../../ui-kit/ConfirmDialog/ConfirmDialog';
 
-const DeleteCategoryModal = () => {
-    const { category } = useModals();
-    const { tasks } = useTasks();
+interface DeleteCategoryModalProps {
+    isOpened: boolean;
+    onClose: () => void;
+    category: ICategoryResponse;
+}
+
+const DeleteCategoryModal:FC<DeleteCategoryModalProps> = ({isOpened, onClose, category}) => {
+    const { data: tasks } = useGetTasksQuery();
     const [deleteCategory] = useDeleteCategoryMutation();
-    const [editTask] = useUpdateTaskMutation()
+    const [editTask] = useUpdateTaskMutation();
 
-    const deleteCategoryHandler = async (id: number) => {
-        const task = tasks.find(task => task.categoryId === id);
+    const onConfirm = () => {
+        const task = tasks?.find(task => task.categoryId === category.id);
 
         if (!task) {
-            await deleteCategory(id).unwrap();
+            deleteCategory(category.id)
+                .unwrap()
+                .then(onClose);            
             return;
         }
 
@@ -27,23 +32,23 @@ const DeleteCategoryModal = () => {
             categoryId: undefined,
         } as ITaskRequest
 
-        await Promise.all([
+        Promise.all([
             editTask(taskRequest).unwrap(),
-            deleteCategory(id).unwrap(),
-        ]);        
+            deleteCategory(category.id).unwrap(),
+        ])
+        .then(onClose);
     }
     
     return (
-        <>
-            {category?.id &&
-                <DeleteModal 
-                    headerText={'Удаление категории'}
-                    id={category.id}
-                    messageText={`Вы уверены, что хотите удалить категорию “${category.name}”?`}
-                    onFormSubmit={deleteCategoryHandler} 
-                />
-            }
-        </>
+        <ConfirmDialog 
+            isOpened={isOpened}
+            onCansel={onClose} 
+            headerText={'Удаление категории'} 
+            onConfirm={onConfirm} 
+            messageText={`Вы уверены, что хотите удалить категорию “${category.name}”?`} 
+            btnConfirmText={'Да'} 
+            btnCanselText={'Нет'}      
+        />        
     );
 };
 

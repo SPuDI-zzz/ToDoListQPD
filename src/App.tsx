@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NotFoundPage from './components/NotFoundPage/NotFoundPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import TasksPage from './pages/TasksPage/TasksPage';
 import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
 

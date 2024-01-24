@@ -1,75 +1,101 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect } from 'react';
+import React, { FC } from 'react';
 import styles from './CategoryModal.module.css';
-import HeaderModal from '../HeaderModal/HeaderModal';
 import { ICategoryRequest } from '../../interfaces/interfaces';
-import InputNameModal from '../InputNameModal/InputModal';
-import TextAreaModal from '../TextAreaModal/TextAreaModal';
-import { useActions } from '../../hooks/useActions';
+import MainPopup from '../../ui-kit/MainPopup/MainPopup';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import InputWithLabel from '../../ui-kit/InputWithLabel/InputWithLabel';
+import { MAX_LENGTH_CATEGORY_DESCRIPTION, MAX_LENGTH_CATEGORY_NAME } from '../../constants/constants';
+import TextAreaWithLabel from '../../ui-kit/TextAreaWithLabel/TextAreaWithLabel';
+import ModalButtonsContainer from '../ModalButtonsContainer/ModalButtonsContainer';
+import PrimaryButton from '../../ui-kit/PrimaryButton/PrimaryButton';
+import SecondaryButton from '../../ui-kit/SecondaryButton/SecondaryButton';
 
 interface CategoryModalProps {
     headerText: string;
     category: ICategoryRequest;
-    setCategory: (value: React.SetStateAction<ICategoryRequest>) => void;
     btnSubmitText: string;
-    onFormSubmit: (category: ICategoryRequest) => Promise<void>;
+    btnCancelText: string;
+    onFormSubmit: (task: ICategoryRequest) => Promise<void>;
+    isOpened: boolean;
+    onClose: () => void;
 }
 
-const CategoryModal:FC<CategoryModalProps> = ({headerText, category, setCategory, btnSubmitText, onFormSubmit}) => {
-    const { closeModal } = useActions();
+const CategoryModal:FC<CategoryModalProps> = ({
+    headerText,
+    category,
+    btnSubmitText,
+    btnCancelText,
+    onFormSubmit,
+    isOpened,
+    onClose
+}) => {
+    const {
+        handleSubmit,
+        control,
+    } = useForm<ICategoryRequest>({
+        mode: 'onChange',
+        defaultValues: {
+            id: category.id,
+            name: category.name,
+            description: category.description,
+        }
+    });
 
-    const closeHandler = () => closeModal();
-
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-
-        return () => {
-            document.body.style.overflow = 'auto'
-        };
-    }, []);
-
-    const submitHandler = (e:FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        onFormSubmit(category)
-            .then(() => closeHandler());
-    }
-
-    const onChangeValue = ({target}:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setCategory({
-            ...category, 
-            [target.name]: target.value
-        });
+    const onSubmit:SubmitHandler<ICategoryRequest> = (data) => {
+        onFormSubmit(data)
+            .then(onClose)
+            .catch(error => console.error('rejected', error));
     }
 
     return (
-        <div className={styles.body}>
-            <form onSubmit={submitHandler} className={styles.container}>
-                <div className={styles.fullContainer}>
-                    <HeaderModal
-                        headerText={headerText}
-                        closeHandler={closeHandler}
-                    />
-                </div>
-                <div className={styles.fullContainer}>
-                    <InputNameModal 
-                        placeholder='Введите имя категории'
-                        value={category.name}
-                        onChange={onChangeValue}
-                    />
-                </div>
-                <div className={styles.fullContainer}>
-                    <TextAreaModal 
-                        placeholder='Введите описание категории' 
-                        value={category.description} 
-                        onChange={onChangeValue}                        
-                    />
-                </div>
-                <div className={styles.actions}>
-                    <button type='submit' className={styles.btnSubmit}>{btnSubmitText}</button>
-                    <button type='button' className={styles.btnClose} onClick={closeHandler}>Закрыть</button>
-                </div>
+        <MainPopup onClose={onClose} isOpened={isOpened} headerText={headerText}>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>                
+                <Controller
+                    control={control}
+                    name='name'
+                    rules={{
+                        required: 'Имя обязательно!',
+                        maxLength: {
+                            value: MAX_LENGTH_CATEGORY_NAME,
+                            message: `Имя должно быть меньше ${MAX_LENGTH_CATEGORY_NAME}!`
+                        }
+                    }}
+                    render={({field: {onChange, value}, fieldState: {error}}) => (
+                        <InputWithLabel 
+                            errorMessage={error?.message}
+                            required={true}
+                            labelText={'Имя'}
+                            placeholder='Введите имя задачи'
+                            value={value}
+                            onChange={newValue => onChange(newValue)}
+                        />
+                    )}
+                />
+                <Controller
+                    control={control}
+                    name='description'
+                    rules={{
+                        maxLength: {
+                            value: MAX_LENGTH_CATEGORY_DESCRIPTION,
+                            message: `Описание должно быть меньше ${MAX_LENGTH_CATEGORY_DESCRIPTION}!`
+                        }
+                    }}
+                    render={({field: {onChange, value}, fieldState: {error}}) => (
+                        <TextAreaWithLabel
+                            errorMessage={error?.message}
+                            labelText='Описание' 
+                            placeholder='Введите описание задачи' 
+                            value={value} 
+                            onChange={newValue => onChange(newValue)}                        
+                        />
+                    )}
+                />
+                <ModalButtonsContainer>
+                    <PrimaryButton type='submit'>{btnSubmitText}</PrimaryButton>
+                    <SecondaryButton type='button' onClick={onClose}>{btnCancelText}</SecondaryButton>
+                </ModalButtonsContainer>
             </form>
-        </div>
+        </MainPopup>
     );
 };
 

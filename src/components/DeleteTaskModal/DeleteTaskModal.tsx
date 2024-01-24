@@ -1,27 +1,37 @@
-import React from 'react';
-import DeleteModal from '../DeleteModal/DeleteModal';
+import React, { FC } from 'react';
 import { useDeleteTaskMutation } from '../../app/services/tasks.api';
-import { useModals } from '../../hooks/useModals';
+import ConfirmDialog from '../../ui-kit/ConfirmDialog/ConfirmDialog';
+import { ITaskResponse } from '../../interfaces/interfaces';
 
-const DeleteTaskModal = () => {
-    const { task } = useModals();
+interface DeleteTaskModalProps {
+    isOpened: boolean;
+    onClose: () => void;
+    task: ITaskResponse;
+}
+
+const DeleteTaskModal:FC<DeleteTaskModalProps> = ({isOpened, onClose, task}) => {
     const [deleteTask] = useDeleteTaskMutation();
 
     const deleteTaskHandler = async (id: number) => {
         await deleteTask(id).unwrap();
     }
 
+    const onConfirm = () => {
+        deleteTask(task.id)
+            .unwrap()
+            .then(onClose);
+    }
+
     return (
-        <>
-            {task?.id &&
-                <DeleteModal 
-                    headerText={'Удаление задачи'}
-                    id={task.id}
-                    messageText={`Вы уверены, что хотите удалить категорию “${task.name}”?`}
-                    onFormSubmit={deleteTaskHandler} 
-                />
-            }
-        </>
+        <ConfirmDialog
+            isOpened={isOpened}
+            onCansel={onClose}
+            headerText={'Удаление задачи'}
+            onConfirm={onConfirm}
+            messageText={`Вы уверены, что хотите удалить задачу “${task.name}”?`}
+            btnConfirmText={'Да'}
+            btnCanselText={'Нет'}
+        />
     );
 };
 

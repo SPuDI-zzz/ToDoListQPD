@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import CategoryModal from '../CategoryModal/CategoryModal';
 import { ICategoryRequest } from '../../interfaces/interfaces';
 import { useAddCategoryMutation } from '../../app/services/categories.api';
 import { DEFAULT_CATEGORY } from '../../constants/constants';
 
-const CreateCategoryModal = () => {
-    const [category, setCategory] = useState<ICategoryRequest>(DEFAULT_CATEGORY);
+interface CreateCategoryModalProps {
+    isOpened: boolean;
+    onClose: () => void;
+}
+
+const CreateCategoryModal:FC<CreateCategoryModalProps> = ({isOpened, onClose}) => {
     const [createCategory] = useAddCategoryMutation();
 
     const createCategoryHandler = async (category: ICategoryRequest) => {
@@ -14,11 +18,13 @@ const CreateCategoryModal = () => {
     
     return (
         <CategoryModal 
-            headerText={'Создание категории'} 
-            category={category}
-            setCategory={setCategory}
+            headerText={'Создание категории'}
+            category={DEFAULT_CATEGORY}
             btnSubmitText={'Создать'}
-            onFormSubmit={createCategoryHandler}
+            btnCancelText={'Закрыть'} 
+            onFormSubmit={createCategoryHandler} 
+            isOpened={isOpened}
+            onClose={onClose}        
         />
     );
 };

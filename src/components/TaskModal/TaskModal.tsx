@@ -1,26 +1,36 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import styles from './TaskModal.module.css'
 import { ITaskRequest, SelectOption } from '../../interfaces/interfaces';
 import Select from '../Select/Select';
-
-import TextAreaModal from '../TextAreaModal/TextAreaModal';
-import { useActions } from '../../hooks/useActions';
 import MainPopup from '../../ui-kit/MainPopup/MainPopup';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useGetCategoriesQuery } from '../../app/services/categories.api';
-import { MAX_LENGTH_TASK_NAME } from '../../constants/constants';
+import { MAX_LENGTH_TASK_DESCRIPTION, MAX_LENGTH_TASK_NAME } from '../../constants/constants';
 import InputWithLabel from '../../ui-kit/InputWithLabel/InputWithLabel';
+import TextAreaWithLabel from '../../ui-kit/TextAreaWithLabel/TextAreaWithLabel';
+import ModalButtonsContainer from '../ModalButtonsContainer/ModalButtonsContainer';
+import PrimaryButton from '../../ui-kit/PrimaryButton/PrimaryButton';
+import SecondaryButton from '../../ui-kit/SecondaryButton/SecondaryButton';
 
 interface TaskModalProps {
     headerText: string;
     task: ITaskRequest;
-    setTask: (value: React.SetStateAction<ITaskRequest>) => void;
     btnSubmitText: string;
+    btnCancelText: string;
     onFormSubmit: (task: ITaskRequest) => Promise<void>;
+    isOpened: boolean;
+    onClose: () => void;
 }
 
-const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText, onFormSubmit}) => {
-    const [selectValue, setSelectValue] = useState<SelectOption | undefined>(undefined);
+const TaskModal:FC<TaskModalProps> = ({
+    headerText,
+    task,
+    btnSubmitText,
+    onFormSubmit,
+    btnCancelText,
+    isOpened,
+    onClose
+}) => {
     const {
         handleSubmit,
         control,
@@ -34,109 +44,82 @@ const TaskModal:FC<TaskModalProps> = ({headerText, task, setTask, btnSubmitText,
         }
     });
     const { data: categories } = useGetCategoriesQuery();
-    const { closeModal } = useActions();
 
-    const closeHandler = () => closeModal();
-
-    const options = categories?.map(category => (
+    const options = categories?.map<SelectOption>(category => (
         {label: category.name, value: category.id}
-    ))
+    ));
 
     const getValue = (value?: number) => {
         return value ? 
             options?.find(option => option.value === value) : 
             undefined;
-    }
-
-    useEffect(() => {
-        if (task.categoryId) {
-            const categoryName = categories?.find(category => category.id === task.categoryId)?.name;
-            
-            categoryName &&
-                setSelectValue({
-                    value: task.categoryId, label: categoryName
-                } as SelectOption);
-        }
-
-        document.body.style.overflow = 'hidden';
-
-        return () => {
-            document.body.style.overflow = 'auto'
-        };
-    }, [categories, task.categoryId]);
+    };
 
     const onSubmit:SubmitHandler<ITaskRequest> = (data) => {
-        debugger;
         onFormSubmit(data)
-            .then(() => closeHandler());
-    }
-
-    const onChangeValue = ({target}:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setTask({
-            ...task, 
-            [target.name]: target.value
-        });
-    }
-
-    const onChangeSelect = (option?: SelectOption) => {
-        setTask({
-            ...task, 
-            categoryId: option?.value
-        });
-
-        setSelectValue(option);
+            .then(onClose);
     }
 
     return (
-        <MainPopup onClose={closeHandler} isOpened={true} headerText={headerText}>
+        <MainPopup onClose={onClose} isOpened={isOpened} headerText={headerText}>
             <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
                 <div className={styles.containerBlock}>
                     <Controller
                         control={control}
                         name='name'
                         rules={{
-                            required: 'Name is required!',
+                            required: 'Имя обязательно!',
                             maxLength: {
                                 value: MAX_LENGTH_TASK_NAME,
-                                message: `Name should be less than ${MAX_LENGTH_TASK_NAME}}`
+                                message: `Имя должно быть меньше ${MAX_LENGTH_TASK_NAME}!`
                             }
                         }}
                         render={({field: {onChange, value}, fieldState: {error}}) => (
-                            <>
-                                <InputWithLabel 
-                                    errorMessage={error?.message}
-                                    required={true}
-                                    label={'Имя'}
-                                    placeholder='Введите имя задачи'
-                                    value={value}
-                                    onChange={newValue => onChange(newValue)}
-                                />
-                            </>
+                            <InputWithLabel 
+                                errorMessage={error?.message}
+                                required={true}
+                                labelText={'Имя'}
+                                placeholder='Введите имя задачи'
+                                value={value}
+                                onChange={newValue => onChange(newValue)}
+                            />
                         )}
                     />
                     <Controller
                         name='categoryId'
                         control={control}
                         render={({field: {onChange, value}}) => (
-                            <>
-                                <Select 
-                                    value={getValue(value)}
-                                    options={options} 
-                                    onChange={(newValue) => onChange(newValue?.value)} 
-                                />
-                            </>
+                            <Select 
+                                value={getValue(value)}
+                                options={options} 
+                                onChange={(newValue) => onChange(newValue?.value)} 
+                            />
                         )}
                     />
                 </div>
-                <TextAreaModal 
-                    placeholder='Введите описание задачи' 
-                    value={task.description} 
-                    onChange={onChangeValue}                        
+                <Controller
+                    control={control}
+                    name='description'
+                    rules={{
+                        maxLength: {
+                            value: MAX_LENGTH_TASK_DESCRIPTION,
+                            message: `Описание должно быть меньше ${MAX_LENGTH_TASK_DESCRIPTION}!`
+                        }
+                    }}
+                    render={({field: {onChange, value}, fieldState: {error}}) => (
+                        <TextAreaWithLabel
+                            errorMessage={error?.message}
+                            labelText='Описание' 
+                            placeholder='Введите описание задачи' 
+                            value={value} 
+                            onChange={newValue => onChange(newValue)}                        
+                        />
+                    )}
                 />
-                <div className={styles.actions}>
-                    <button type='submit' className={styles.btnSubmit}>{btnSubmitText}</button>
-                    <button type='button' className={styles.btnClose} onClick={closeHandler}>Закрыть</button>
-                </div>
+                <ModalButtonsContainer>
+                    <PrimaryButton type='submit'>{btnSubmitText}</PrimaryButton>
+                    <SecondaryButton type='button' onClick={onClose}>{btnCancelText}</SecondaryButton>
+                </ModalButtonsContainer>
             </form>
         </MainPopup>
     );

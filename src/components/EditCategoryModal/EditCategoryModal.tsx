@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { DEFAULT_CATEGORY } from '../../constants/constants';
+import React, { FC } from 'react';
 import CategoryModal from '../CategoryModal/CategoryModal';
 import { useUpdateCategoryMutation } from '../../app/services/categories.api';
-import { ICategoryRequest } from '../../interfaces/interfaces';
-import { useModals } from '../../hooks/useModals';
+import { ICategoryRequest, ICategoryResponse } from '../../interfaces/interfaces';
 
-const EditCategoryModal = () => {
-    const { category } = useModals();
-    const [editCategory, setEditCategory] = useState<ICategoryRequest>(category ?? DEFAULT_CATEGORY);
+interface EditCategoryModalProps {
+    isOpened: boolean;
+    onClose: () => void;
+    category: ICategoryResponse;
+}
+
+const EditCategoryModal:FC<EditCategoryModalProps> = ({isOpened, category, onClose}) => {
     const [updateCategory] = useUpdateCategoryMutation();
 
     const updateCategoryHandler = async (category: ICategoryRequest) => {
@@ -18,11 +20,13 @@ const EditCategoryModal = () => {
         <>
             {category &&
                 <CategoryModal 
-                    headerText={'Редактирование категории'} 
-                    category={editCategory}
-                    setCategory={setEditCategory}
+                    headerText={'Редактирование категории'}
+                    category={category}
                     btnSubmitText={'Сохранить'}
+                    btnCancelText={'Закрыть'}
                     onFormSubmit={updateCategoryHandler}
+                    isOpened={isOpened}
+                    onClose={onClose}                
                 />
             }
         </>

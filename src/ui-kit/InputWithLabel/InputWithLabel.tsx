@@ -3,20 +3,20 @@ import styles from './InputWithLabel.module.css'
 
 interface InputWithLabelProps {
     name?: string;
-    placeholder: string;
+    placeholder?: string;
     value: string;
-    label: string;
+    labelText?: string;
     required?: boolean;
     type?: HTMLInputTypeAttribute;
     onChange: (e:ChangeEvent<HTMLInputElement>) => void;
     errorMessage?: string;
 }
 
-const InputWithLabel:FC<InputWithLabelProps> = ({name, placeholder, value, onChange, label, required, type, errorMessage}) => {
+const InputWithLabel:FC<InputWithLabelProps> = ({name, placeholder, value, onChange, labelText, required, type, errorMessage}) => {
     return (
         <div className={styles.inputBox}>
             <label className={styles.label}>
-                {label} 
+                {labelText} 
                 {required &&
                     <span className={styles.requireInput}>*</span>
                 }

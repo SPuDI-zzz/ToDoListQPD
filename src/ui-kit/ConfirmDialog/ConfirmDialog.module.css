@@ -1,28 +1,18 @@
 @import url(../../constants/constants.module.css);
 
-.body {
-    position: fixed;
-    background: var(--color-background-modal-panel);
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-	left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .container {
-    width: 600px;
-    height: 228px;
+    --padding-size: 24px;
+
+    position: absolute;
+    width: calc(800px - var(--padding-size) * 2);
+    max-height: calc(800px - var(--padding-size) * 2);
     background: var(--color-white-secondary);
     box-shadow: 0px 8px 24px var(--color-background-shadow);
     border-radius: 4px;
-    padding: 5px 0;
+    padding: var(--padding-size);
     display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    align-content: space-around;
+    flex-direction: column;
+    gap: 34px;
 }
 
 .messageText {
@@ -48,10 +38,6 @@
     gap: 24px
 }
 
-.fullContainer {
-    width: 552px;
-}
-
 .btnSubmit {
     width: 120px;
     height: 46px;
@@ -67,7 +53,7 @@
     padding: 0;
 }
 
-.btnClose {
+.btnCansel {
     width: 120px;
     height: 46px;
     border-radius: 4px;
@@ -83,6 +69,6 @@
 }
 
 .btnSubmit:hover,
-.btnClose:hover {
+.btnCansel:hover {
     cursor: pointer;
 }

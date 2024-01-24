@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import TaskModal from '../TaskModal/TaskModal';
 import { useUpdateTaskMutation } from '../../app/services/tasks.api';
-import { ITaskRequest } from '../../interfaces/interfaces';
-import { DEFAULT_TASK } from '../../constants/constants';
-import { useModals } from '../../hooks/useModals';
+import { ITaskRequest, ITaskResponse } from '../../interfaces/interfaces';
 
-const EditTaskModal = () => {
-    const { task } = useModals();
-    const [editTask, setEditTask] = useState<ITaskRequest>(task ?? DEFAULT_TASK);
+interface EditTaskModalProps {
+    isOpened: boolean;
+    onClose: () => void;
+    task: ITaskResponse;
+}
+
+const EditTaskModal:FC<EditTaskModalProps> = ({isOpened, onClose, task}) => {
     const [updateTask] = useUpdateTaskMutation();
 
     const updateTaskHandler = async (task: ITaskRequest) => {
@@ -17,11 +19,13 @@ const EditTaskModal = () => {
     return (
         <>
             {task &&
-                <TaskModal 
+                <TaskModal
+                    isOpened={isOpened}
+                    onClose={onClose} 
                     headerText={'Редактирование задачи'} 
-                    task={editTask}
-                    setTask={setEditTask}
+                    task={task}
                     btnSubmitText={'Сохранить'}
+                    btnCancelText={'Закрыть'}
                     onFormSubmit={updateTaskHandler}
                 />
             }

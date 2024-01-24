@@ -1,33 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main/Main';
 import Categories from '../../components/Categories/Categories';
-import { MODAL_STATE } from '../../constants/constants';
-import CreateCategory from '../../components/CreateCategoryModal/CreateCategoryModal';
-import EditCategory from '../../components/EditCategoryModal/EditCategoryModal';
-import DeleteCategory from '../../components/DeleteCategoryModal/DeleteCategoryModal';
-import { useActions } from '../../hooks/useActions';
-import { useModals } from '../../hooks/useModals';
-
-const modals = new Map<string, JSX.Element | null>([
-    [MODAL_STATE.CREATE, <CreateCategory />],
-    [MODAL_STATE.EDIT, <EditCategory />],
-    [MODAL_STATE.DELETE, <DeleteCategory />],
-    [MODAL_STATE.CLOSE, null],
-]);
+import CreateCategoryModal from '../../components/CreateCategoryModal/CreateCategoryModal';
 
 const CategoriesPage = () => {
-    const { modalState } = useModals();
-    const { setCreateCategoryModal } = useActions();
+    const [isOpenedCreateCategoryModal, setIsOpenedCreateCategoryModal] = useState(false);
 
-    const addCategoryHandler = () => setCreateCategoryModal();
+    const addCategoryHandler = () => setIsOpenedCreateCategoryModal(true);
+    const onCloseModal = () => setIsOpenedCreateCategoryModal(false);
+
     return (
         <>
             <Header buttonText='Добавить категорию' onButtonClick={addCategoryHandler}/>
             <Main>
                 <Categories />
             </Main>
-            {modals.get(modalState)}
+            {isOpenedCreateCategoryModal && <CreateCategoryModal 
+                isOpened={isOpenedCreateCategoryModal}
+                onClose={onCloseModal} 
+            />}
         </>
     );
 };
