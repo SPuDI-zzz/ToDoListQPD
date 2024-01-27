@@ -2,13 +2,14 @@ import React, { FC } from 'react';
 import styles from './CategoryModal.module.css';
 import { ICategoryRequest } from '../../interfaces/interfaces';
 import MainPopup from '../../ui-kit/MainPopup/MainPopup';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import InputWithLabel from '../../ui-kit/InputWithLabel/InputWithLabel';
+import { Controller, useForm } from 'react-hook-form';
+import InputWithLabel from '../InputWithLabel/InputWithLabel';
 import { MAX_LENGTH_CATEGORY_DESCRIPTION, MAX_LENGTH_CATEGORY_NAME } from '../../constants/constants';
-import TextAreaWithLabel from '../../ui-kit/TextAreaWithLabel/TextAreaWithLabel';
+import TextAreaWithLabel from '../TextAreaWithLabel/TextAreaWithLabel';
 import ModalButtonsContainer from '../ModalButtonsContainer/ModalButtonsContainer';
 import PrimaryButton from '../../ui-kit/PrimaryButton/PrimaryButton';
 import SecondaryButton from '../../ui-kit/SecondaryButton/SecondaryButton';
+import ErrorAlert from '../ErrorAlert/ErrorAlert';
 
 interface CategoryModalProps {
     headerText: string;
@@ -18,6 +19,7 @@ interface CategoryModalProps {
     onFormSubmit: (task: ICategoryRequest) => Promise<void>;
     isOpened: boolean;
     onClose: () => void;
+    errorMessage?: string;
 }
 
 const CategoryModal:FC<CategoryModalProps> = ({
@@ -27,7 +29,8 @@ const CategoryModal:FC<CategoryModalProps> = ({
     btnCancelText,
     onFormSubmit,
     isOpened,
-    onClose
+    onClose,
+    errorMessage,
 }) => {
     const {
         handleSubmit,
@@ -41,15 +44,9 @@ const CategoryModal:FC<CategoryModalProps> = ({
         }
     });
 
-    const onSubmit:SubmitHandler<ICategoryRequest> = (data) => {
-        onFormSubmit(data)
-            .then(onClose)
-            .catch(error => console.error('rejected', error));
-    }
-
     return (
         <MainPopup onClose={onClose} isOpened={isOpened} headerText={headerText}>
-            <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>                
+            <form onSubmit={handleSubmit(onFormSubmit)} className={styles.container}>                
                 <Controller
                     control={control}
                     name='name'
@@ -57,7 +54,7 @@ const CategoryModal:FC<CategoryModalProps> = ({
                         required: 'Имя обязательно!',
                         maxLength: {
                             value: MAX_LENGTH_CATEGORY_NAME,
-                            message: `Имя должно быть меньше ${MAX_LENGTH_CATEGORY_NAME}!`
+                            message: `Имя должно быть меньше ${MAX_LENGTH_CATEGORY_NAME} знаков!`
                         }
                     }}
                     render={({field: {onChange, value}, fieldState: {error}}) => (
@@ -65,7 +62,7 @@ const CategoryModal:FC<CategoryModalProps> = ({
                             errorMessage={error?.message}
                             required={true}
                             labelText={'Имя'}
-                            placeholder='Введите имя задачи'
+                            placeholder='Введите имя категории'
                             value={value}
                             onChange={newValue => onChange(newValue)}
                         />
@@ -77,19 +74,20 @@ const CategoryModal:FC<CategoryModalProps> = ({
                     rules={{
                         maxLength: {
                             value: MAX_LENGTH_CATEGORY_DESCRIPTION,
-                            message: `Описание должно быть меньше ${MAX_LENGTH_CATEGORY_DESCRIPTION}!`
+                            message: `Описание должно быть меньше ${MAX_LENGTH_CATEGORY_DESCRIPTION} знаков!`
                         }
                     }}
                     render={({field: {onChange, value}, fieldState: {error}}) => (
                         <TextAreaWithLabel
                             errorMessage={error?.message}
                             labelText='Описание' 
-                            placeholder='Введите описание задачи' 
+                            placeholder='Введите описание категории' 
                             value={value} 
                             onChange={newValue => onChange(newValue)}                        
                         />
                     )}
                 />
+                <ErrorAlert message={errorMessage}/>
                 <ModalButtonsContainer>
                     <PrimaryButton type='submit'>{btnSubmitText}</PrimaryButton>
                     <SecondaryButton type='button' onClick={onClose}>{btnCancelText}</SecondaryButton>

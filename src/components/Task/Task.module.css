@@ -2,22 +2,6 @@
 
 .container {
     display: flex;
-    justify-content: space-between;
-    border-bottom: 2px solid var(--color-blue);
-    padding: 8px 16px 10px;
-    height: 62px;
-}
-
-.leftBlock {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 50%;
-}
-
-
-.taskContainer {
-    display: flex;
     align-items: center;
     gap: 16px;
 }
@@ -31,7 +15,7 @@
     padding-right: 24px;
 }
 
-.category {
+.categoryContainer {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -50,73 +34,4 @@
     color: var(--color-blue);
     height: calc(var(--max-lines) * var(--line-height));
     overflow: hidden;
-}
-
-.taskName {
-    --max-lines: 1;
-    --line-height: 20px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: var(--line-height);
-    letter-spacing: 0em;
-    text-align: left;
-    color: var(--color-black);
-    height: calc(var(--max-lines) * var(--line-height));
-    overflow: hidden;
-}
-
-.task {
-    display: flex;
-    align-items: center;
-    height: 32px;
-}
-
-.description {
-    display: flex;
-    height: 28px;
-    align-items: center;
-}
-
-.descriptionText {
-    --max-lines: 1;
-    --line-height: 20px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: var(--line-height);
-    letter-spacing: 0em;
-    text-align: left;
-    color: var(--color-grey);
-    height: calc(var(--max-lines) * var(--line-height));
-    white-space: pre-line;
-    overflow: hidden;
-}
-
-.rightBlock {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-top: 14px;
-}
-
-.btnEdit {
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_28_103)'%3E%3Cpath d='M0 18.9993V24H5.00069L19.756 9.24459L14.7553 4.2439L0 18.9993Z' fill='%233F72AF'/%3E%3Cpath d='M23.61 3.5038L20.4962 0.390054C19.9762 -0.130018 19.1294 -0.130018 18.6093 0.390054L16.1689 2.83039L21.1696 7.83108L23.61 5.39074C24.1301 4.87067 24.1301 4.02387 23.61 3.5038Z' fill='%233F72AF'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_28_103'%3E%3Crect width='24' height='24' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
-    width: 24px;
-    height: 24px;
-    border: none;
-    background-color: inherit;
-}
-
-.btnDelete {
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 21.3333C4 22.8067 5.19331 24 6.66669 24H17.3334C18.8067 24 20 22.8067 20 21.3333V5.33331H4V21.3333Z' fill='%233F72AF'/%3E%3Cpath d='M16.6667 1.33331L15.3334 0H8.66675L7.33337 1.33331H2.66675V4H21.3334V1.33331H16.6667Z' fill='%233F72AF'/%3E%3C/svg%3E");
-    width: 24px;
-    height: 24px;
-    border: none;
-    background-color: inherit;
-}
-
-.btnEdit:hover,
-.btnDelete:hover {
-    cursor: pointer;
 }

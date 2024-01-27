@@ -2,6 +2,10 @@ import React, { FC } from 'react';
 import OverlayingPopup from '../OverlayingPopup/OverlayingPopup';
 import HeaderModal from '../../components/HeaderModal/HeaderModal';
 import styles from './ConfirmDialog.module.css'
+import ErrorAlert from '../../components/ErrorAlert/ErrorAlert';
+import ModalButtonsContainer from '../../components/ModalButtonsContainer/ModalButtonsContainer';
+import PrimaryButton from '../PrimaryButton/PrimaryButton';
+import SecondaryButton from '../SecondaryButton/SecondaryButton';
 
 interface ConfirmDialogProps {
     isOpened: boolean;
@@ -11,6 +15,7 @@ interface ConfirmDialogProps {
     messageText: string;
     btnConfirmText: string;
     btnCanselText:string;
+    errorMessage?: string;
 }
 
 const ConfirmDialog:FC<ConfirmDialogProps> = ({
@@ -21,16 +26,18 @@ const ConfirmDialog:FC<ConfirmDialogProps> = ({
     messageText,
     btnCanselText,
     btnConfirmText,
+    errorMessage,
 }) => {
     return (
         <OverlayingPopup onClose={onCansel} isOpened={isOpened}>
             <div className={styles.container}>
                 <HeaderModal headerText={headerText} closeHandler={onCansel} />
                 <p title={messageText} className={styles.messageText}>{messageText}</p>
-                <div className={styles.actions}>
-                    <button type='button' className={styles.btnSubmit} onClick={onConfirm}>{btnConfirmText}</button>
-                    <button type='button' className={styles.btnCansel} onClick={onCansel}>{btnCanselText}</button>
-                </div>
+                <ErrorAlert message={errorMessage}/>
+                <ModalButtonsContainer>
+                    <PrimaryButton type='button' className={styles.btnConfirm} onClick={onConfirm}>{btnConfirmText}</PrimaryButton>
+                    <SecondaryButton onClick={onCansel}>{btnCanselText}</SecondaryButton>
+                </ModalButtonsContainer>
             </div>
         </OverlayingPopup>
     );

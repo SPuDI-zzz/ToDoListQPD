@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import CategoryModal from '../CategoryModal/CategoryModal';
 import { ICategoryRequest } from '../../interfaces/interfaces';
 import { useAddCategoryMutation } from '../../app/services/categories.api';
@@ -11,9 +11,16 @@ interface CreateCategoryModalProps {
 
 const CreateCategoryModal:FC<CreateCategoryModalProps> = ({isOpened, onClose}) => {
     const [createCategory] = useAddCategoryMutation();
+    const [errorMessage, setErrorMessage] = useState('');
 
     const createCategoryHandler = async (category: ICategoryRequest) => {
-        await createCategory(category).unwrap();
+        try {
+            await createCategory(category).unwrap();
+
+            onClose();
+        } catch {
+            setErrorMessage(`Ошибка при создании категории ${category.name}!`);
+        }
     }
     
     return (
@@ -24,7 +31,8 @@ const CreateCategoryModal:FC<CreateCategoryModalProps> = ({isOpened, onClose}) =
             btnCancelText={'Закрыть'} 
             onFormSubmit={createCategoryHandler} 
             isOpened={isOpened}
-            onClose={onClose}        
+            onClose={onClose}  
+            errorMessage={errorMessage}      
         />
     );
 };

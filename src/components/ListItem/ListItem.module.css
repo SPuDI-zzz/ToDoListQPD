@@ -11,54 +11,14 @@
 .leftBlock {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 50%;
-}
-
-.categoryName {
-    --max-lines: 1;
-    --line-height: 20px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: var(--line-height);
-    letter-spacing: 0em;
-    text-align: left;
-    color: var(--color-black);
-    height: calc(var(--max-lines) * var(--line-height));
-    overflow: hidden;
-}
-
-.category {
-    display: flex;
-    align-items: center;
-    height: 32px;
-}
-
-.description {
-    display: flex;
-    height: 28px;
-    align-items: center;
-}
-
-.descriptionText {
-    --max-lines: 1;
-    --line-height: 20px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: var(--line-height);
-    letter-spacing: 0em;
-    text-align: left;
-    color: var(--color-grey);
-    height: calc(var(--max-lines) * var(--line-height));
-    white-space: pre-line;
-    overflow: hidden;
+    justify-content: space-between; 
+    flex-basis: 85%;
 }
 
 .rightBlock {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 12px;
     padding-top: 14px;
 }

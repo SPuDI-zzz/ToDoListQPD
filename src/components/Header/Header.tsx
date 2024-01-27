@@ -9,12 +9,12 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({buttonText, onButtonClick}) => {
     return (
-        <header className={styles.header}>
-            <div className={styles.container}>
-                <div className={styles.leftBlock}>
-                    <h1 className={styles.toDoList}>ToDo List</h1>
-                    <Nav />
-                </div>
+        <header className={styles.container}>
+            <div className={styles.leftBlock}>
+                <p className={styles.toDoList}>ToDo List</p>
+                <Nav />
+            </div>
+            {buttonText &&
                 <button 
                     type='button' 
                     onClick={() => onButtonClick?.()}
@@ -22,7 +22,7 @@ const Header: FC<HeaderProps> = ({buttonText, onButtonClick}) => {
                 >
                     {buttonText}
                 </button>  
-            </div>
+            }
         </header>  
     );
 };

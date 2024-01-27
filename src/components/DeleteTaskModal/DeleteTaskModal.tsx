@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useDeleteTaskMutation } from '../../app/services/tasks.api';
 import ConfirmDialog from '../../ui-kit/ConfirmDialog/ConfirmDialog';
 import { ITaskResponse } from '../../interfaces/interfaces';
@@ -11,15 +11,16 @@ interface DeleteTaskModalProps {
 
 const DeleteTaskModal:FC<DeleteTaskModalProps> = ({isOpened, onClose, task}) => {
     const [deleteTask] = useDeleteTaskMutation();
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const deleteTaskHandler = async (id: number) => {
-        await deleteTask(id).unwrap();
-    }
-
-    const onConfirm = () => {
-        deleteTask(task.id)
-            .unwrap()
-            .then(onClose);
+    const onConfirm = async () => {
+        try {           
+            await deleteTask(task.id).unwrap();
+            
+            onClose();
+        } catch {
+            setErrorMessage(`Ошибка при удалении задачи ${task.name}!`);
+        }
     }
 
     return (
@@ -31,6 +32,7 @@ const DeleteTaskModal:FC<DeleteTaskModalProps> = ({isOpened, onClose, task}) => 
             messageText={`Вы уверены, что хотите удалить задачу “${task.name}”?`}
             btnConfirmText={'Да'}
             btnCanselText={'Нет'}
+            errorMessage={errorMessage}
         />
     );
 };

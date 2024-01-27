@@ -7,7 +7,12 @@ interface SecondaryButtonProps {
     onClick?: () => void;
 }
 
-const SecondaryButton:FC<PropsWithChildren<SecondaryButtonProps>> = ({children, className, type, onClick}) => {
+const SecondaryButton:FC<PropsWithChildren<SecondaryButtonProps>> = ({
+    children,
+    className = '',
+    type,
+    onClick
+}) => {
     return (
         <button 
             onClick={onClick}

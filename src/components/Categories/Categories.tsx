@@ -1,9 +1,14 @@
 import React from 'react';
 import { useGetCategoriesQuery } from '../../app/services/categories.api';
 import Category from '../Category/Category';
+import ErrorAlert from '../ErrorAlert/ErrorAlert';
 
 const Categories = () => {  
-    const {isLoading, data: categories } = useGetCategoriesQuery();
+    const {isLoading, data: categories, isError} = useGetCategoriesQuery();
+    
+    if (isError) {
+        return <ErrorAlert message={'Не удалось получить данные по категориям!'}/>
+    }
 
     return (
         <>

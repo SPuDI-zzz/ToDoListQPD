@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import styles from './Select.module.css'
 import { SelectOption } from '../../interfaces/interfaces';
+import Label from '../../ui-kit/Label/Label';
 
 interface SelectProps {
     options?: SelectOption[];
@@ -23,7 +24,7 @@ const Select: FC<SelectProps> = ({value, options, onChange}) => {
 
     return (
         <div className={styles.container}>
-            <label className={styles.label}>Категория</label>
+            <Label>Категория</Label>
             <div 
                 tabIndex={0} 
                 onBlur={() => setIsOpen(false)} 

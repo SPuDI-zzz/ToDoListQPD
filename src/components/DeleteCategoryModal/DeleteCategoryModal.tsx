@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useDeleteCategoryMutation } from '../../app/services/categories.api';
-import { useGetTasksQuery, useUpdateTaskMutation } from '../../app/services/tasks.api';
-import { ICategoryResponse, ITaskRequest } from '../../interfaces/interfaces';
+import { ICategoryResponse } from '../../interfaces/interfaces';
 import ConfirmDialog from '../../ui-kit/ConfirmDialog/ConfirmDialog';
 
 interface DeleteCategoryModalProps {
@@ -11,32 +10,17 @@ interface DeleteCategoryModalProps {
 }
 
 const DeleteCategoryModal:FC<DeleteCategoryModalProps> = ({isOpened, onClose, category}) => {
-    const { data: tasks } = useGetTasksQuery();
+    const [errorMessage, setErrorMessage] = useState('');
     const [deleteCategory] = useDeleteCategoryMutation();
-    const [editTask] = useUpdateTaskMutation();
 
-    const onConfirm = () => {
-        const task = tasks?.find(task => task.categoryId === category.id);
-
-        if (!task) {
-            deleteCategory(category.id)
-                .unwrap()
-                .then(onClose);            
-            return;
+    const onConfirm = async () => {
+        try {
+            await deleteCategory(category.id).unwrap();
+            
+            onClose();
+        } catch {
+            setErrorMessage(`Ошибка при удалении категории ${category.name}!`);
         }
-
-        const taskRequest = {
-            id: task.id,
-            name: task.name,
-            description: task.description,
-            categoryId: undefined,
-        } as ITaskRequest
-
-        Promise.all([
-            editTask(taskRequest).unwrap(),
-            deleteCategory(category.id).unwrap(),
-        ])
-        .then(onClose);
     }
     
     return (
@@ -47,7 +31,8 @@ const DeleteCategoryModal:FC<DeleteCategoryModalProps> = ({isOpened, onClose, ca
             onConfirm={onConfirm} 
             messageText={`Вы уверены, что хотите удалить категорию “${category.name}”?`} 
             btnConfirmText={'Да'} 
-            btnCanselText={'Нет'}      
+            btnCanselText={'Нет'}     
+            errorMessage={errorMessage} 
         />        
     );
 };

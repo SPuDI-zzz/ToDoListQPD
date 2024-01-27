@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 const Portal:FC<PropsWithChildren> = ({children}) => {
@@ -10,7 +10,7 @@ const Portal:FC<PropsWithChildren> = ({children}) => {
         return () => {
             document.body.removeChild(container)
         };
-    }, [])
+    }, [container])
 
     return ReactDOM.createPortal(children, container)
 };

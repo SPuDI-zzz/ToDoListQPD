@@ -7,7 +7,12 @@ interface PrimaryButtonProps {
     onClick?: () => void;
 }
 
-const PrimaryButton:FC<PropsWithChildren<PrimaryButtonProps>> = ({children, className, type, onClick}) => {
+const PrimaryButton:FC<PropsWithChildren<PrimaryButtonProps>> = ({
+    children,
+    className = '',
+    type,
+    onClick
+}) => {
     return (
         <button 
             onClick={onClick}

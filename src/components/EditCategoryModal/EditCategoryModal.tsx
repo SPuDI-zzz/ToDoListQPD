@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import CategoryModal from '../CategoryModal/CategoryModal';
 import { useUpdateCategoryMutation } from '../../app/services/categories.api';
 import { ICategoryRequest, ICategoryResponse } from '../../interfaces/interfaces';
@@ -11,25 +11,29 @@ interface EditCategoryModalProps {
 
 const EditCategoryModal:FC<EditCategoryModalProps> = ({isOpened, category, onClose}) => {
     const [updateCategory] = useUpdateCategoryMutation();
+    const [errorMessage, setErrorMessage] = useState('');
 
     const updateCategoryHandler = async (category: ICategoryRequest) => {
-        await updateCategory(category).unwrap();
+        try {
+            await updateCategory(category).unwrap()
+            
+            onClose();
+        } catch {
+            setErrorMessage(`Ошибка при обновлении категории ${category.name}!`);
+        }
     }
     
-    return (
-        <>
-            {category &&
-                <CategoryModal 
-                    headerText={'Редактирование категории'}
-                    category={category}
-                    btnSubmitText={'Сохранить'}
-                    btnCancelText={'Закрыть'}
-                    onFormSubmit={updateCategoryHandler}
-                    isOpened={isOpened}
-                    onClose={onClose}                
-                />
-            }
-        </>
+    return (          
+        <CategoryModal 
+            headerText={'Редактирование категории'}
+            category={category}
+            btnSubmitText={'Сохранить'}
+            btnCancelText={'Закрыть'}
+            onFormSubmit={updateCategoryHandler}
+            isOpened={isOpened}
+            onClose={onClose}  
+            errorMessage={errorMessage}              
+        />
     );
 };
 

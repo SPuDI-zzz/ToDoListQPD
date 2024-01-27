@@ -8,7 +8,7 @@ interface HeaderModalProps {
 
 const HeaderModal:FC<HeaderModalProps> = ({headerText, closeHandler}) => {
     return (
-        <div className={styles.header}>
+        <div className={styles.container}>
             <p className={styles.headerText}>{headerText}</p>
             <div onClick={closeHandler} className={styles.close}></div>
         </div>

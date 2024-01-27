@@ -50,3 +50,12 @@ export const {
     useUpdateCategoryMutation,
     useDeleteCategoryMutation,
 } = categoriesApi;
+
+export const {
+    endpoints: {
+        getCategories,
+        addCategory,
+        updateCategory,
+        deleteCategory
+    }
+} = categoriesApi

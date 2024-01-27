@@ -3,14 +3,15 @@ import { ITask } from '../../interfaces/interfaces';
 import Task from '../Task/Task';
 import { useGetTasksQuery } from '../../app/services/tasks.api';
 import { useGetCategoriesQuery } from '../../app/services/categories.api';
+import ErrorAlert from '../ErrorAlert/ErrorAlert';
 
 const Tasks = () => {
     const [tasks, setTasks] = useState<ITask[] | undefined>(undefined);
-    const {isLoading: isLoadingTasks, data: tasksResponse} = useGetTasksQuery();
-    const {isLoading: isLoadingCategories, data: categoriesResponse} = useGetCategoriesQuery();
+    const {isLoading: isLoadingTasks, data: tasksResponse, isError: isErrorTasks} = useGetTasksQuery();
+    const {isLoading: isLoadingCategories, data: categoriesResponse, isError: isErrorCategories} = useGetCategoriesQuery();
 
     useEffect(() => {
-        if (isLoadingTasks || isLoadingCategories)
+        if (isLoadingTasks || isLoadingCategories || isErrorTasks)
             return;
 
         setTasks(tasksResponse?.map<ITask>(task => {
@@ -24,20 +25,28 @@ const Tasks = () => {
                 description: task.description,
                 categoryId: task.categoryId,
                 categoryName: categoryName,
-            } as ITask
+            }
         }));
-    }, [tasksResponse, categoriesResponse, setTasks, isLoadingTasks, isLoadingCategories]);
-    
+    }, [tasksResponse, categoriesResponse, setTasks, isLoadingTasks, isLoadingCategories, isErrorTasks]);
+
     return (
         <>
             {isLoadingTasks || isLoadingCategories ? 
                 <div>Loading...</div> :
-                tasks?.map(task => 
-                    <Task 
-                        key={task.id} 
-                        task={task}
-                    />
-                )
+                <>
+                    {isErrorTasks &&
+                        <ErrorAlert message={'Не удалось получить данные по задачам!'}/>
+                    }
+                    {isErrorCategories &&
+                        <ErrorAlert message={'Не удалось получить данные по категориям!'}/>
+                    }
+                    {tasks?.map(task => 
+                        <Task 
+                            key={task.id} 
+                            task={task}
+                        />
+                    )}
+                </>
             }
         </>
     );
