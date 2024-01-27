@@ -6,7 +6,6 @@ interface InputProps {
     name?: string;
     placeholder?: string;
     value: string;
-    labelText?: string;
     required?: boolean;
     type?: HTMLInputTypeAttribute;
     onChange: (e:ChangeEvent<HTMLInputElement>) => void;

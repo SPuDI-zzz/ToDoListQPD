@@ -8,7 +8,6 @@ interface TextAreaProps {
     onChange: (e:ChangeEvent<HTMLTextAreaElement>) => void;
     errorMessage?: string
     name?: string;
-    labelText?: string;
     className?: string;
 }
 
