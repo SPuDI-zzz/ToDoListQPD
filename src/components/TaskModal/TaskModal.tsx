@@ -1,18 +1,17 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from './TaskModal.module.css'
-import { ITaskRequest, SelectOption } from '../../interfaces/interfaces';
-import Select from '../Select/Select';
+import { ITaskRequest } from '../../interfaces/interfaces';
+import Select, { SelectOption } from '../Select/Select';
 import MainPopup from '../../ui-kit/MainPopup/MainPopup';
 import { Controller, useForm } from 'react-hook-form';
 import { getCategories } from '../../app/services/categories.api';
 import { MAX_LENGTH_TASK_DESCRIPTION, MAX_LENGTH_TASK_NAME } from '../../constants/constants';
-import InputWithLabel from '../InputWithLabel/InputWithLabel';
-import TextAreaWithLabel from '../TextAreaWithLabel/TextAreaWithLabel';
 import ModalButtonsContainer from '../ModalButtonsContainer/ModalButtonsContainer';
-import PrimaryButton from '../../ui-kit/PrimaryButton/PrimaryButton';
-import SecondaryButton from '../../ui-kit/SecondaryButton/SecondaryButton';
+import Button from '../../ui-kit/Button/Button';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import Input from '../../ui-kit/Input/Input';
+import TextArea from '../../ui-kit/TextArea/TextArea';
 
 interface TaskModalProps {
     headerText: string;
@@ -83,7 +82,7 @@ const TaskModal:FC<TaskModalProps> = ({
                             }
                         }}
                         render={({field: {onChange, value}, fieldState: {error}}) => (
-                            <InputWithLabel 
+                            <Input 
                                 errorMessage={error?.message}
                                 required={true}
                                 labelText={'Имя'}
@@ -101,6 +100,7 @@ const TaskModal:FC<TaskModalProps> = ({
                                 value={getValue(value)}
                                 options={options} 
                                 onChange={(newValue) => onChange(newValue?.value)} 
+                                labelText='Категория'
                             />
                         )}
                     />
@@ -115,7 +115,7 @@ const TaskModal:FC<TaskModalProps> = ({
                         }
                     }}
                     render={({field: {onChange, value}, fieldState: {error}}) => (
-                        <TextAreaWithLabel
+                        <TextArea
                             errorMessage={error?.message}
                             labelText='Описание' 
                             placeholder='Введите описание задачи' 
@@ -124,13 +124,15 @@ const TaskModal:FC<TaskModalProps> = ({
                         />
                     )}
                 />
-                <div>
-                    <ErrorAlert message={categoriesErrorMessage}/>
-                    <ErrorAlert message={errorMessage}/>
-                </div>
+                {(categoriesErrorMessage || errorMessage) &&
+                    <div>
+                        <ErrorAlert message={categoriesErrorMessage}/>
+                        <ErrorAlert message={errorMessage}/>
+                    </div>
+                }
                 <ModalButtonsContainer>
-                    <PrimaryButton type='submit'>{btnSubmitText}</PrimaryButton>
-                    <SecondaryButton type='button' onClick={onClose}>{btnCancelText}</SecondaryButton>
+                    <Button type='submit'>{btnSubmitText}</Button>
+                    <Button variant='outlined' type='button' onClick={onClose}>{btnCancelText}</Button>
                 </ModalButtonsContainer>
             </form>           
         </MainPopup>

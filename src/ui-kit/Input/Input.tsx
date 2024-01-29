@@ -1,37 +1,36 @@
-import React, { ChangeEvent, FC, HTMLInputTypeAttribute, PropsWithChildren } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import styles from './Input.module.css'
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Label from '../Label/Label';
 
 interface InputProps {
+    labelText?: string;
+    required?: boolean;
+    errorMessage?: string;
+    className?: string;
     name?: string;
     placeholder?: string;
     value: string;
-    required?: boolean;
-    type?: HTMLInputTypeAttribute;
+    type?: 'text' | 'number' | 'email' | 'password';
     onChange: (e:ChangeEvent<HTMLInputElement>) => void;
-    errorMessage?: string;
-    className?: string;
+    readonly?: boolean;
+    maxLength?: number;
+    id?: string;
 }
 
-const Input:FC<PropsWithChildren<InputProps>> = ({
-    children,
-    name,
-    placeholder,
-    value,
-    onChange,
-    type,
+const Input:FC<InputProps> = ({
+    labelText,
+    required,
     errorMessage,
     className = '',
+    ...props
 }) => {
     return (
         <div className={styles.container}>
-            {children}
+            <Label required={required}>{labelText}</Label>
             <input 
-                name={name}
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder} 
-                type={type} 
+                {...props}
+                required={required}
                 className={`${styles.input} ${className}`}
             />
             <ErrorMessage className={styles.error}>{errorMessage}</ErrorMessage>

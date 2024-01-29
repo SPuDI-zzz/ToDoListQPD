@@ -24,8 +24,3 @@ export interface ICategory extends ICategoryResponse { }
 export interface ICategoryRequest extends Omit<ICategoryResponse, 'id'> {
     id?: number
 }
-
-export interface SelectOption {
-    label: string;
-    value: number;
-}

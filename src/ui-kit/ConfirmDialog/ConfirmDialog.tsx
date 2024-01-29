@@ -4,8 +4,7 @@ import HeaderModal from '../../components/HeaderModal/HeaderModal';
 import styles from './ConfirmDialog.module.css'
 import ErrorAlert from '../../components/ErrorAlert/ErrorAlert';
 import ModalButtonsContainer from '../../components/ModalButtonsContainer/ModalButtonsContainer';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
-import SecondaryButton from '../SecondaryButton/SecondaryButton';
+import Button from '../Button/Button';
 
 interface ConfirmDialogProps {
     isOpened: boolean;
@@ -35,8 +34,8 @@ const ConfirmDialog:FC<ConfirmDialogProps> = ({
                 <p title={messageText} className={styles.messageText}>{messageText}</p>
                 <ErrorAlert message={errorMessage}/>
                 <ModalButtonsContainer>
-                    <PrimaryButton type='button' className={styles.btnConfirm} onClick={onConfirm}>{btnConfirmText}</PrimaryButton>
-                    <SecondaryButton onClick={onCansel}>{btnCanselText}</SecondaryButton>
+                    <Button type='button' className={styles.btnConfirm} onClick={onConfirm}>{btnConfirmText}</Button>
+                    <Button variant='outlined'  type='button' onClick={onCansel}>{btnCanselText}</Button>
                 </ModalButtonsContainer>
             </div>
         </OverlayingPopup>

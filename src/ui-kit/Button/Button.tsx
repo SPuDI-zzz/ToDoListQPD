@@ -1,27 +1,29 @@
 import React, { FC, PropsWithChildren } from 'react';
-import styles from './PrimaryButton.module.css'
+import styles from './Button.module.css'
 
-interface PrimaryButtonProps {
+interface ButtonProps {
     type?: 'submit' | 'button';
     className?: string;
     onClick?: () => void;
+    variant?: 'primary' | 'outlined'
 }
 
-const PrimaryButton:FC<PropsWithChildren<PrimaryButtonProps>> = ({
+const Button:FC<PropsWithChildren<ButtonProps>> = ({
     children,
     className = '',
     type,
+    variant = 'primary',
     onClick
 }) => {
     return (
         <button 
             onClick={onClick}
             type={type}
-            className={`${styles.btnPrimary} ${className}`}
+            className={`${variant === 'primary' ? styles.btnPrimary : styles.btnOutlined} ${className}`}
         >
             {children}
         </button>
     );
 };
 
-export default PrimaryButton;
+export default Button;

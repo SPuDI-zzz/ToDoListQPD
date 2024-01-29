@@ -1,15 +1,20 @@
 import React, { FC, useState } from 'react';
 import styles from './Select.module.css'
-import { SelectOption } from '../../interfaces/interfaces';
 import Label from '../../ui-kit/Label/Label';
+
+export interface SelectOption {
+    label: string;
+    value: number;
+}
 
 interface SelectProps {
     options?: SelectOption[];
     value?: SelectOption;
-    onChange: (value?: SelectOption) => void
+    onChange: (value?: SelectOption) => void;
+    labelText?: string;
 }
 
-const Select: FC<SelectProps> = ({value, options, onChange}) => {
+const Select: FC<SelectProps> = ({value, options, onChange, labelText}) => {
     const [isOpen, setIsOpen] = useState(false);
     
     function selectOption(option: SelectOption) {
@@ -24,7 +29,7 @@ const Select: FC<SelectProps> = ({value, options, onChange}) => {
 
     return (
         <div className={styles.container}>
-            <Label>Категория</Label>
+            <Label>{labelText}</Label>
             <div 
                 tabIndex={0} 
                 onBlur={() => setIsOpen(false)} 

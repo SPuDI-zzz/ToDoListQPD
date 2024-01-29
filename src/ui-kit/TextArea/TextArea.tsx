@@ -1,6 +1,7 @@
-import React, { ChangeEvent, FC, PropsWithChildren, useEffect, useRef } from 'react';
+import React, { ChangeEvent, FC, useEffect, useRef } from 'react';
 import styles from './TextArea.module.css'
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Label from '../Label/Label';
 
 interface TextAreaProps {
     placeholder:string;
@@ -9,6 +10,11 @@ interface TextAreaProps {
     errorMessage?: string
     name?: string;
     className?: string;
+    maxLength?: number;
+    id?: string;
+    readonly?: boolean;
+    labelText?: string;
+    required?: boolean;
 }
 
 const PADDING_TOP = 9;
@@ -32,14 +38,13 @@ const useAutosizeTextArea = (
     }, [textAreaRef, value]);
 };
 
-const TextArea:FC<PropsWithChildren<TextAreaProps>> = ({
-    placeholder,
-    value,
-    onChange,
+const TextArea:FC<TextAreaProps> = ({
     errorMessage,
-    name,
-    children,
     className = '',
+    labelText,
+    required,
+    value,
+    ...props
 }) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -47,13 +52,11 @@ const TextArea:FC<PropsWithChildren<TextAreaProps>> = ({
 
     return (
         <div className={styles.container}>
-            {children}
+            <Label required={required}>{labelText}</Label>
             <textarea
+                {...props}
                 ref={textAreaRef}
-                name={name}
                 value={value}
-                onChange={onChange}
-                placeholder={placeholder}
                 className={`${styles.textarea} ${className}`} 
             />
             <ErrorMessage>{errorMessage}</ErrorMessage>

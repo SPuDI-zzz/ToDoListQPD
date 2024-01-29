@@ -3,13 +3,12 @@ import styles from './CategoryModal.module.css';
 import { ICategoryRequest } from '../../interfaces/interfaces';
 import MainPopup from '../../ui-kit/MainPopup/MainPopup';
 import { Controller, useForm } from 'react-hook-form';
-import InputWithLabel from '../InputWithLabel/InputWithLabel';
 import { MAX_LENGTH_CATEGORY_DESCRIPTION, MAX_LENGTH_CATEGORY_NAME } from '../../constants/constants';
-import TextAreaWithLabel from '../TextAreaWithLabel/TextAreaWithLabel';
 import ModalButtonsContainer from '../ModalButtonsContainer/ModalButtonsContainer';
-import PrimaryButton from '../../ui-kit/PrimaryButton/PrimaryButton';
-import SecondaryButton from '../../ui-kit/SecondaryButton/SecondaryButton';
+import Button from '../../ui-kit/Button/Button';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
+import Input from '../../ui-kit/Input/Input';
+import TextArea from '../../ui-kit/TextArea/TextArea';
 
 interface CategoryModalProps {
     headerText: string;
@@ -58,7 +57,7 @@ const CategoryModal:FC<CategoryModalProps> = ({
                         }
                     }}
                     render={({field: {onChange, value}, fieldState: {error}}) => (
-                        <InputWithLabel 
+                        <Input 
                             errorMessage={error?.message}
                             required={true}
                             labelText={'Имя'}
@@ -78,7 +77,7 @@ const CategoryModal:FC<CategoryModalProps> = ({
                         }
                     }}
                     render={({field: {onChange, value}, fieldState: {error}}) => (
-                        <TextAreaWithLabel
+                        <TextArea
                             errorMessage={error?.message}
                             labelText='Описание' 
                             placeholder='Введите описание категории' 
@@ -89,8 +88,8 @@ const CategoryModal:FC<CategoryModalProps> = ({
                 />
                 <ErrorAlert message={errorMessage}/>
                 <ModalButtonsContainer>
-                    <PrimaryButton type='submit'>{btnSubmitText}</PrimaryButton>
-                    <SecondaryButton type='button' onClick={onClose}>{btnCancelText}</SecondaryButton>
+                    <Button type='submit'>{btnSubmitText}</Button>
+                    <Button variant='outlined' type='button' onClick={onClose}>{btnCancelText}</Button>
                 </ModalButtonsContainer>
             </form>
         </MainPopup>
