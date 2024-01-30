@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetCategoriesQuery } from '../../app/services/categories.api';
 import Category from '../Category/Category';
-import ErrorAlert from '../ErrorAlert/ErrorAlert';
+import ErrorAlert from '../../ui-kit/ErrorAlert/ErrorAlert';
 
 const Categories = () => {  
     const {isLoading, data: categories, isError} = useGetCategoriesQuery();

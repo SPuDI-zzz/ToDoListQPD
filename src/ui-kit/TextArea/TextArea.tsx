@@ -1,20 +1,12 @@
-import React, { ChangeEvent, FC, useEffect, useRef } from 'react';
+import React, { DetailedHTMLProps, FC, useEffect, useRef } from 'react';
 import styles from './TextArea.module.css'
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Label from '../Label/Label';
 
-interface TextAreaProps {
-    placeholder:string;
-    value: string;
-    onChange: (e:ChangeEvent<HTMLTextAreaElement>) => void;
-    errorMessage?: string
-    name?: string;
-    className?: string;
-    maxLength?: number;
-    id?: string;
-    readonly?: boolean;
+interface TextAreaProps extends DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
+    value?: string;
     labelText?: string;
-    required?: boolean;
+    error?: boolean;
+    helperText?: string;
 }
 
 const PADDING_TOP = 9;
@@ -23,7 +15,7 @@ const MAX_HEIGHT = 490;
 
 const useAutosizeTextArea = (
     textAreaRef: HTMLTextAreaElement | null,
-    value: string
+    value?: string
 ) => {
     useEffect(() => {
         if (!textAreaRef)
@@ -39,16 +31,17 @@ const useAutosizeTextArea = (
 };
 
 const TextArea:FC<TextAreaProps> = ({
-    errorMessage,
     className = '',
     labelText,
     required,
     value,
+    helperText,
+    error,
     ...props
 }) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-    useAutosizeTextArea(textAreaRef.current, value)
+    useAutosizeTextArea(textAreaRef.current, value);
 
     return (
         <div className={styles.container}>
@@ -59,7 +52,9 @@ const TextArea:FC<TextAreaProps> = ({
                 value={value}
                 className={`${styles.textarea} ${className}`} 
             />
-            <ErrorMessage>{errorMessage}</ErrorMessage>
+            {helperText && 
+                <p className={`${styles.help} ${error ? styles.error : ''}`}>{helperText}</p>
+            }
         </div>
     );
 };

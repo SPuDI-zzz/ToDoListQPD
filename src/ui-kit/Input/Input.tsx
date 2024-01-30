@@ -1,28 +1,22 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { DetailedHTMLProps, FC, PropsWithChildren } from 'react';
 import styles from './Input.module.css'
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Label from '../Label/Label';
 
-interface InputProps {
+interface InputProps extends DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     labelText?: string;
-    required?: boolean;
-    errorMessage?: string;
-    className?: string;
-    name?: string;
-    placeholder?: string;
-    value: string;
+    value?: string;
     type?: 'text' | 'number' | 'email' | 'password';
-    onChange: (e:ChangeEvent<HTMLInputElement>) => void;
-    readonly?: boolean;
-    maxLength?: number;
-    id?: string;
+    helperText?: string;
+    error?: boolean;
 }
 
-const Input:FC<InputProps> = ({
+const Input:FC<PropsWithChildren<InputProps>> = ({
+    children,
     labelText,
     required,
-    errorMessage,
     className = '',
+    helperText,
+    error,
     ...props
 }) => {
     return (
@@ -33,7 +27,9 @@ const Input:FC<InputProps> = ({
                 required={required}
                 className={`${styles.input} ${className}`}
             />
-            <ErrorMessage className={styles.error}>{errorMessage}</ErrorMessage>
+            {helperText && 
+                <p className={`${styles.help} ${error ? styles.error : ''}`}>{helperText}</p>
+            }
         </div>
     );
 };

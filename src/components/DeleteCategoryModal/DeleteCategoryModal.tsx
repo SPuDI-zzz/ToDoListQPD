@@ -1,39 +1,44 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { useDeleteCategoryMutation } from '../../app/services/categories.api';
-import { ICategoryResponse } from '../../interfaces/interfaces';
+import { ICategory } from '../../interfaces/interfaces';
 import ConfirmDialog from '../../ui-kit/ConfirmDialog/ConfirmDialog';
+import ErrorAlert from '../../ui-kit/ErrorAlert/ErrorAlert';
 
 interface DeleteCategoryModalProps {
     isOpened: boolean;
     onClose: () => void;
-    category: ICategoryResponse;
+    category: ICategory;
 }
 
 const DeleteCategoryModal:FC<DeleteCategoryModalProps> = ({isOpened, onClose, category}) => {
-    const [errorMessage, setErrorMessage] = useState('');
-    const [deleteCategory] = useDeleteCategoryMutation();
+    const [deleteCategory, {isError, isSuccess, reset}] = useDeleteCategoryMutation();
+
+    const onCloseHandler = useCallback(() => {
+        reset();
+        onClose();
+    }, [reset, onClose]);
+
+    useEffect(() => {
+        if (isSuccess)
+            onCloseHandler();
+    }, [isSuccess, onCloseHandler]);
 
     const onConfirm = async () => {
-        try {
-            await deleteCategory(category.id).unwrap();
-            
-            onClose();
-        } catch {
-            setErrorMessage(`Ошибка при удалении категории ${category.name}!`);
-        }
+        deleteCategory(category.id);
     }
     
     return (
         <ConfirmDialog 
             isOpened={isOpened}
-            onCansel={onClose} 
+            onCancel={onCloseHandler} 
             headerText={'Удаление категории'} 
             onConfirm={onConfirm} 
             messageText={`Вы уверены, что хотите удалить категорию “${category.name}”?`} 
             btnConfirmText={'Да'} 
             btnCanselText={'Нет'}     
-            errorMessage={errorMessage} 
-        />        
+        >
+            <ErrorAlert message={isError ? `Ошибка при удалении категории ${category.name}!` : ''}/>
+        </ConfirmDialog>        
     );
 };
 

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import styles from './Task.module.css'
-import { ITask } from '../../interfaces/interfaces';
+import { ITaskWithCategory } from '../../interfaces/interfaces';
 import EditTaskModal from '../EditTaskModal/EditTaskModal';
 import DeleteTaskModal from '../DeleteTaskModal/DeleteTaskModal';
 import ListItem from '../ListItem/ListItem';
@@ -8,7 +8,7 @@ import ListItemNameText from '../ListItemNameText/ListItemNameText';
 import ListItemDescriptionText from '../ListItemDescriptionText/ListItemDescriptionText';
 
 export interface TaskProps {
-    task: ITask;
+    task: ITaskWithCategory;
 }
 
 const Task: FC<TaskProps> = ({task}) => {

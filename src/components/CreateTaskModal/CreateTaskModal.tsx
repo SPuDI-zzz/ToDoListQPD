@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import { ITaskRequest } from '../../interfaces/interfaces';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
+import { ITaskCreate } from '../../interfaces/interfaces';
 import { useAddTaskMutation } from '../../app/services/tasks.api';
 import TaskModal from '../TaskModal/TaskModal';
 import { DEFAULT_TASK } from '../../constants/constants';
@@ -10,30 +10,34 @@ interface CreateTaskProps {
 }
 
 const CreateTask:FC<CreateTaskProps> = ({isOpened, onClose}) => {
-    const [createTask] = useAddTaskMutation();
-    const [errorMessage, setErrorMessage] = useState('');
+    const [createTask, {isError, isSuccess, reset}] = useAddTaskMutation();
+    const taskRef = useRef<ITaskCreate>();
 
-    const createTaskHandler = async (task: ITaskRequest) => {
-        try {
-            await createTask(task).unwrap();
+    const onCloseHandler = useCallback(() => {
+        reset();
+        onClose();
+    }, [reset, onClose]);
 
-            onClose();
-        }
-        catch {
-            setErrorMessage(`Ошибка при создании задачи ${task.name}!`);
-        }
+    useEffect(() => {
+        if (isSuccess)
+            onCloseHandler();
+    }, [isSuccess, onCloseHandler]);
+
+    const createTaskHandler = async (task: ITaskCreate) => {
+        taskRef.current = task;
+        createTask(task);
     }
 
     return (     
         <TaskModal 
             headerText={'Создание задачи'} 
-            task={DEFAULT_TASK}
+            defaultValues={DEFAULT_TASK}
             btnSubmitText={'Создать'}
             btnCancelText={'Закрыть'}
             onFormSubmit={createTaskHandler}
             isOpened={isOpened}
-            onClose={onClose}
-            errorMessage={errorMessage}
+            onClose={onCloseHandler}
+            errorMessage={isError ? `Ошибка при создании задачи ${taskRef.current?.name}!` : ''}
         />
     );
 };

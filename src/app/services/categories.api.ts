@@ -1,9 +1,9 @@
-import { ICategoryRequest, ICategoryResponse } from "../../interfaces/interfaces";
+import { ICategoryCreate, ICategory } from "../../interfaces/interfaces";
 import { api } from "./api";
 
 export const categoriesApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getCategories: builder.query<ICategoryResponse[], void>({
+        getCategories: builder.query<ICategory[], void>({
             query: () => ({
                 url: '/GetCategories',
                 method: 'GET',
@@ -12,7 +12,7 @@ export const categoriesApi = api.injectEndpoints({
                 type: 'Categories'
             }],
         }),
-        addCategory: builder.mutation<ICategoryResponse, ICategoryRequest>({
+        addCategory: builder.mutation<ICategory, ICategoryCreate>({
             query: (category) => ({
                 url: '/AddCategory',
                 method: 'POST',
@@ -22,7 +22,7 @@ export const categoriesApi = api.injectEndpoints({
                 type: 'Categories'
             }]
         }),
-        updateCategory: builder.mutation<ICategoryResponse, ICategoryRequest>({
+        updateCategory: builder.mutation<ICategory, ICategory>({
             query: (category) => ({
                 url: '/UpdateCategory',
                 method: 'POST',
@@ -58,4 +58,4 @@ export const {
         updateCategory,
         deleteCategory
     }
-} = categoriesApi
+} = categoriesApi;

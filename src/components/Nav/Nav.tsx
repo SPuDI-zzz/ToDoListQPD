@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Nav.module.css'
-import HeaderNavLink from '../../ui-kit/HeaderNavLink/HeaderNavLink';
-import HeaderNavSeparator from '../../ui-kit/HeaderNavSeparator/HeaderNavSeparator';
+import HeaderNavLink from '../HeaderNavLink/HeaderNavLink';
+import HeaderNavSeparator from '../HeaderNavSeparator/HeaderNavSeparator';
 
 const Nav = () => {
     return (

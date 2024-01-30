@@ -1,21 +1,21 @@
 import React, { FC } from 'react';
 import styles from './CategoryModal.module.css';
-import { ICategoryRequest } from '../../interfaces/interfaces';
+import { ICategory } from '../../interfaces/interfaces';
 import MainPopup from '../../ui-kit/MainPopup/MainPopup';
 import { Controller, useForm } from 'react-hook-form';
 import { MAX_LENGTH_CATEGORY_DESCRIPTION, MAX_LENGTH_CATEGORY_NAME } from '../../constants/constants';
-import ModalButtonsContainer from '../ModalButtonsContainer/ModalButtonsContainer';
+import ModalButtonsContainer from '../../ui-kit/ModalButtonsContainer/ModalButtonsContainer';
 import Button from '../../ui-kit/Button/Button';
-import ErrorAlert from '../ErrorAlert/ErrorAlert';
+import ErrorAlert from '../../ui-kit/ErrorAlert/ErrorAlert';
 import Input from '../../ui-kit/Input/Input';
 import TextArea from '../../ui-kit/TextArea/TextArea';
 
 interface CategoryModalProps {
     headerText: string;
-    category: ICategoryRequest;
+    defaultValues?: ICategory;
     btnSubmitText: string;
     btnCancelText: string;
-    onFormSubmit: (task: ICategoryRequest) => Promise<void>;
+    onFormSubmit: (task: ICategory) => void;
     isOpened: boolean;
     onClose: () => void;
     errorMessage?: string;
@@ -23,7 +23,7 @@ interface CategoryModalProps {
 
 const CategoryModal:FC<CategoryModalProps> = ({
     headerText,
-    category,
+    defaultValues,
     btnSubmitText,
     btnCancelText,
     onFormSubmit,
@@ -34,13 +34,9 @@ const CategoryModal:FC<CategoryModalProps> = ({
     const {
         handleSubmit,
         control,
-    } = useForm<ICategoryRequest>({
+    } = useForm<ICategory>({
         mode: 'onChange',
-        defaultValues: {
-            id: category.id,
-            name: category.name,
-            description: category.description,
-        }
+        defaultValues: defaultValues
     });
 
     return (
@@ -58,12 +54,13 @@ const CategoryModal:FC<CategoryModalProps> = ({
                     }}
                     render={({field: {onChange, value}, fieldState: {error}}) => (
                         <Input 
-                            errorMessage={error?.message}
                             required={true}
                             labelText={'Имя'}
                             placeholder='Введите имя категории'
                             value={value}
                             onChange={newValue => onChange(newValue)}
+                            error={Boolean(error)}
+                            helperText={error && error.message}
                         />
                     )}
                 />
@@ -78,12 +75,14 @@ const CategoryModal:FC<CategoryModalProps> = ({
                     }}
                     render={({field: {onChange, value}, fieldState: {error}}) => (
                         <TextArea
-                            errorMessage={error?.message}
                             labelText='Описание' 
                             placeholder='Введите описание категории' 
                             value={value} 
-                            onChange={newValue => onChange(newValue)}                        
-                        />
+                            onChange={newValue => onChange(newValue)}
+                            error={Boolean(error)}
+                            helperText={error && error.message}                         
+                        >
+                        </TextArea>
                     )}
                 />
                 <ErrorAlert message={errorMessage}/>

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import styles from './ErrorAlert.module.css'
-import ErrorMessage from '../../ui-kit/ErrorMessage/ErrorMessage';
 
 interface ErrorAlertProps {
     message?: string;

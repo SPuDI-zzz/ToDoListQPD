@@ -1,38 +1,43 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import CategoryModal from '../CategoryModal/CategoryModal';
 import { useUpdateCategoryMutation } from '../../app/services/categories.api';
-import { ICategoryRequest, ICategoryResponse } from '../../interfaces/interfaces';
+import { ICategory } from '../../interfaces/interfaces';
 
 interface EditCategoryModalProps {
     isOpened: boolean;
     onClose: () => void;
-    category: ICategoryResponse;
+    category: ICategory;
 }
 
 const EditCategoryModal:FC<EditCategoryModalProps> = ({isOpened, category, onClose}) => {
-    const [updateCategory] = useUpdateCategoryMutation();
-    const [errorMessage, setErrorMessage] = useState('');
+    const [updateCategory, {isError, isSuccess, reset}] = useUpdateCategoryMutation();
+    const categoryRef = useRef<ICategory>(category);
+    
+    const onCloseHandler = useCallback(() => {
+        reset();
+        onClose();
+    }, [reset, onClose]);
 
-    const updateCategoryHandler = async (category: ICategoryRequest) => {
-        try {
-            await updateCategory(category).unwrap()
-            
-            onClose();
-        } catch {
-            setErrorMessage(`Ошибка при обновлении категории ${category.name}!`);
-        }
+    useEffect(() => {
+        if (isSuccess)
+            onCloseHandler();
+    }, [isSuccess, onCloseHandler]);
+    
+    const updateCategoryHandler = async (category: ICategory) => {   
+        categoryRef.current = category;
+        updateCategory(category);   
     }
     
     return (          
         <CategoryModal 
             headerText={'Редактирование категории'}
-            category={category}
+            defaultValues={category}
             btnSubmitText={'Сохранить'}
             btnCancelText={'Закрыть'}
             onFormSubmit={updateCategoryHandler}
             isOpened={isOpened}
-            onClose={onClose}  
-            errorMessage={errorMessage}              
+            onClose={onCloseHandler}  
+            errorMessage={isError ? `Ошибка при обновлении категории ${categoryRef.current.name}!` : ''}              
         />
     );
 };

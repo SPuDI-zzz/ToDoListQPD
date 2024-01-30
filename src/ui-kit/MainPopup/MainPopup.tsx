@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren } from 'react';
 import OverlayingPopup from '../OverlayingPopup/OverlayingPopup';
-import HeaderModal from '../../components/HeaderModal/HeaderModal';
+import HeaderModal from '../HeaderModal/HeaderModal';
 import styles from './MainPopup.module.css'
 
 interface MainPopupProps {

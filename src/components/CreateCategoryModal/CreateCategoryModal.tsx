@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import CategoryModal from '../CategoryModal/CategoryModal';
-import { ICategoryRequest } from '../../interfaces/interfaces';
+import { ICategoryCreate } from '../../interfaces/interfaces';
 import { useAddCategoryMutation } from '../../app/services/categories.api';
 import { DEFAULT_CATEGORY } from '../../constants/constants';
 
@@ -10,29 +10,34 @@ interface CreateCategoryModalProps {
 }
 
 const CreateCategoryModal:FC<CreateCategoryModalProps> = ({isOpened, onClose}) => {
-    const [createCategory] = useAddCategoryMutation();
-    const [errorMessage, setErrorMessage] = useState('');
+    const [createCategory, {isError, isSuccess, reset}] = useAddCategoryMutation();
+    const categoryRef = useRef<ICategoryCreate>();
 
-    const createCategoryHandler = async (category: ICategoryRequest) => {
-        try {
-            await createCategory(category).unwrap();
+    const onCloseHandler = useCallback(() => {
+        reset();
+        onClose();
+    }, [reset, onClose]);
 
-            onClose();
-        } catch {
-            setErrorMessage(`Ошибка при создании категории ${category.name}!`);
-        }
+    useEffect(() => {
+        if (isSuccess)
+            onCloseHandler();
+    }, [isSuccess, onCloseHandler]);
+
+    const createCategoryHandler = async (category: ICategoryCreate) => {
+        categoryRef.current = category;
+        createCategory(category);
     }
     
     return (
         <CategoryModal 
             headerText={'Создание категории'}
-            category={DEFAULT_CATEGORY}
+            defaultValues={DEFAULT_CATEGORY}
             btnSubmitText={'Создать'}
             btnCancelText={'Закрыть'} 
             onFormSubmit={createCategoryHandler} 
             isOpened={isOpened}
-            onClose={onClose}  
-            errorMessage={errorMessage}      
+            onClose={onCloseHandler}  
+            errorMessage={isError ? `Ошибка при создании категории ${categoryRef.current?.name}!`: ''}      
         />
     );
 };

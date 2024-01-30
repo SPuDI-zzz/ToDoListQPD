@@ -1,24 +1,19 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { DetailedHTMLProps, FC, PropsWithChildren } from 'react';
 import styles from './Button.module.css'
 
-interface ButtonProps {
-    type?: 'submit' | 'button';
-    className?: string;
-    onClick?: () => void;
+interface ButtonProps extends DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     variant?: 'primary' | 'outlined'
 }
 
 const Button:FC<PropsWithChildren<ButtonProps>> = ({
     children,
     className = '',
-    type,
     variant = 'primary',
-    onClick
+    ...props
 }) => {
     return (
         <button 
-            onClick={onClick}
-            type={type}
+            {...props}
             className={`${variant === 'primary' ? styles.btnPrimary : styles.btnOutlined} ${className}`}
         >
             {children}

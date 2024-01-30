@@ -1,41 +1,39 @@
-import React, { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import OverlayingPopup from '../OverlayingPopup/OverlayingPopup';
-import HeaderModal from '../../components/HeaderModal/HeaderModal';
+import HeaderModal from '../HeaderModal/HeaderModal';
 import styles from './ConfirmDialog.module.css'
-import ErrorAlert from '../../components/ErrorAlert/ErrorAlert';
-import ModalButtonsContainer from '../../components/ModalButtonsContainer/ModalButtonsContainer';
+import ModalButtonsContainer from '../ModalButtonsContainer/ModalButtonsContainer';
 import Button from '../Button/Button';
 
 interface ConfirmDialogProps {
     isOpened: boolean;
-    onCansel: () => void;
+    onCancel: () => void;
     headerText: string;
     onConfirm: () => void;
     messageText: string;
     btnConfirmText: string;
     btnCanselText:string;
-    errorMessage?: string;
 }
 
-const ConfirmDialog:FC<ConfirmDialogProps> = ({
+const ConfirmDialog:FC<PropsWithChildren<ConfirmDialogProps>> = ({
+    children,
     isOpened,
-    onCansel,
+    onCancel,
     headerText,
     onConfirm,
     messageText,
     btnCanselText,
     btnConfirmText,
-    errorMessage,
 }) => {
     return (
-        <OverlayingPopup onClose={onCansel} isOpened={isOpened}>
+        <OverlayingPopup onClose={onCancel} isOpened={isOpened}>
             <div className={styles.container}>
-                <HeaderModal headerText={headerText} closeHandler={onCansel} />
+                <HeaderModal headerText={headerText} closeHandler={onCancel} />
                 <p title={messageText} className={styles.messageText}>{messageText}</p>
-                <ErrorAlert message={errorMessage}/>
+                {children}
                 <ModalButtonsContainer>
                     <Button type='button' className={styles.btnConfirm} onClick={onConfirm}>{btnConfirmText}</Button>
-                    <Button variant='outlined'  type='button' onClick={onCansel}>{btnCanselText}</Button>
+                    <Button variant='outlined'  type='button' onClick={onCancel}>{btnCanselText}</Button>
                 </ModalButtonsContainer>
             </div>
         </OverlayingPopup>

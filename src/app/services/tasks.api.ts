@@ -1,9 +1,9 @@
-import { ITaskRequest, ITaskResponse } from "../../interfaces/interfaces";
+import { ITaskCreate, ITask } from "../../interfaces/interfaces";
 import { api } from "./api";
 
 export const tasksApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getTasks: builder.query<ITaskResponse[], void>({
+        getTasks: builder.query<ITask[], void>({
             query: () => ({
                 url: '/GetTasks',
                 method: 'GET',
@@ -12,7 +12,7 @@ export const tasksApi = api.injectEndpoints({
                 type: 'Tasks'
             }],
         }),
-        addTask: builder.mutation<ITaskResponse, ITaskRequest>({
+        addTask: builder.mutation<ITask, ITaskCreate>({
             query: (task) => ({
                 url: '/AddTask',
                 method: 'POST',
@@ -22,7 +22,7 @@ export const tasksApi = api.injectEndpoints({
                 type: 'Tasks'
             }]
         }),
-        updateTask: builder.mutation<ITaskResponse, ITaskRequest>({
+        updateTask: builder.mutation<ITask, ITask>({
             query: (task) => ({
                 url: '/UpdateTask',
                 method: 'POST',
@@ -58,4 +58,4 @@ export const {
         updateTask,
         deleteTask,
     }
-} = tasksApi
+} = tasksApi;

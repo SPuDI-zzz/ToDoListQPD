@@ -1,32 +1,47 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import styles from './TaskModal.module.css'
-import { ITaskRequest } from '../../interfaces/interfaces';
+import { ITask } from '../../interfaces/interfaces';
 import Select, { SelectOption } from '../Select/Select';
 import MainPopup from '../../ui-kit/MainPopup/MainPopup';
 import { Controller, useForm } from 'react-hook-form';
-import { getCategories } from '../../app/services/categories.api';
 import { MAX_LENGTH_TASK_DESCRIPTION, MAX_LENGTH_TASK_NAME } from '../../constants/constants';
-import ModalButtonsContainer from '../ModalButtonsContainer/ModalButtonsContainer';
+import ModalButtonsContainer from '../../ui-kit/ModalButtonsContainer/ModalButtonsContainer';
 import Button from '../../ui-kit/Button/Button';
-import ErrorAlert from '../ErrorAlert/ErrorAlert';
+import ErrorAlert from '../../ui-kit/ErrorAlert/ErrorAlert';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Input from '../../ui-kit/Input/Input';
 import TextArea from '../../ui-kit/TextArea/TextArea';
+import { selectCategoriesResult } from '../../app/services/selectors/categories';
+import { createSelector } from '@reduxjs/toolkit';
 
 interface TaskModalProps {
     headerText: string;
-    task: ITaskRequest;
+    defaultValues?: ITask;
     btnSubmitText: string;
     btnCancelText: string;
-    onFormSubmit: (task: ITaskRequest) => void;
+    onFormSubmit: (task: ITask) => void;
     isOpened: boolean;
     onClose: () => void;
     errorMessage?: string;
 }
 
+const selectOptions = createSelector(
+    selectCategoriesResult,
+    ({data: categories, isError}) => {
+        const options = categories?.map<SelectOption>(category => (
+            {label: category.name, value: category.id}
+        ));
+
+        return {
+            options,
+            isError  
+        }
+    }
+);
+
 const TaskModal:FC<TaskModalProps> = ({
     headerText,
-    task,
+    defaultValues,
     btnSubmitText,
     onFormSubmit,
     btnCancelText,
@@ -37,29 +52,12 @@ const TaskModal:FC<TaskModalProps> = ({
     const {
         handleSubmit,
         control,
-    } = useForm<ITaskRequest>({
+    } = useForm<ITask>({
         mode: 'onChange',
-        defaultValues: {
-            id: task.id,
-            name: task.name,
-            description: task.description,
-            categoryId: task.categoryId,
-        }
+        defaultValues: defaultValues
     });
-    const [categoriesErrorMessage, setCategoriesErrorMessage] = useState('');
-    const [options, setOptions] = useState<SelectOption[] | undefined>(undefined);
-    const {data : categories, isError} = getCategories.select()(useTypedSelector(state => state));
 
-    useEffect(() => {
-        if (isError) {
-            setCategoriesErrorMessage('Не удалось получить данные по категориям!');
-            return;
-        }
-
-        setOptions(categories?.map<SelectOption>(category => (
-            {label: category.name, value: category.id}
-        )));
-    }, [categories, isError])
+    const {options, isError} = useTypedSelector(selectOptions);
 
     const getValue = (value?: number) => {
         return value ? 
@@ -83,12 +81,13 @@ const TaskModal:FC<TaskModalProps> = ({
                         }}
                         render={({field: {onChange, value}, fieldState: {error}}) => (
                             <Input 
-                                errorMessage={error?.message}
                                 required={true}
                                 labelText={'Имя'}
                                 placeholder='Введите имя задачи'
                                 value={value}
                                 onChange={newValue => onChange(newValue)}
+                                error={Boolean(error)}
+                                helperText={error && error.message}
                             />
                         )}
                     />
@@ -116,17 +115,18 @@ const TaskModal:FC<TaskModalProps> = ({
                     }}
                     render={({field: {onChange, value}, fieldState: {error}}) => (
                         <TextArea
-                            errorMessage={error?.message}
                             labelText='Описание' 
                             placeholder='Введите описание задачи' 
                             value={value} 
-                            onChange={newValue => onChange(newValue)}                        
-                        />
+                            onChange={newValue => onChange(newValue)} 
+                            error={Boolean(error)}
+                            helperText={error && error.message}                     
+                        />  
                     )}
                 />
-                {(categoriesErrorMessage || errorMessage) &&
+                {(isError || errorMessage) &&
                     <div>
-                        <ErrorAlert message={categoriesErrorMessage}/>
+                        <ErrorAlert message={isError ? 'Не удалось получить данные по категориям!' : ''}/>
                         <ErrorAlert message={errorMessage}/>
                     </div>
                 }

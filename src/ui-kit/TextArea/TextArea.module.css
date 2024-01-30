@@ -19,3 +19,16 @@
     width: calc(100% - 14px);
     padding: 9px 5px 0 5px;
 }
+
+.help {
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0em;
+    padding: 0 7px;
+    color: var(--color-grey);
+}
+
+.error {
+    color: var(--color-error);
+}

@@ -1,26 +1,20 @@
-export interface ITaskResponse {
+export interface ITask {
     id: number;
     name: string;
     description: string;
     categoryId?: number;
 }
 
-export interface ITask extends ITaskResponse {
+export interface ITaskWithCategory extends ITask {
     categoryName?: string;
 }
 
-export interface ITaskRequest extends Omit<ITaskResponse, 'id'> {
-    id?: number
-}
+export interface ITaskCreate extends Omit<ITask, 'id'> {}
 
-export interface ICategoryResponse {
+export interface ICategory {
     id: number;
     name: string;
     description: string;
 }
 
-export interface ICategory extends ICategoryResponse { }
-
-export interface ICategoryRequest extends Omit<ICategoryResponse, 'id'> {
-    id?: number
-}
+export interface ICategoryCreate extends Omit<ICategory, 'id'> {}
