@@ -13,6 +13,7 @@ interface ConfirmDialogProps {
     messageText: string;
     btnConfirmText: string;
     btnCanselText:string;
+    isLoading?:boolean;
 }
 
 const ConfirmDialog:FC<PropsWithChildren<ConfirmDialogProps>> = ({
@@ -24,6 +25,7 @@ const ConfirmDialog:FC<PropsWithChildren<ConfirmDialogProps>> = ({
     messageText,
     btnCanselText,
     btnConfirmText,
+    isLoading,
 }) => {
     return (
         <OverlayingPopup onClose={onCancel} isOpened={isOpened}>
@@ -32,8 +34,8 @@ const ConfirmDialog:FC<PropsWithChildren<ConfirmDialogProps>> = ({
                 <p title={messageText} className={styles.messageText}>{messageText}</p>
                 {children}
                 <ModalButtonsContainer>
-                    <Button type='button' className={styles.btnConfirm} onClick={onConfirm}>{btnConfirmText}</Button>
-                    <Button variant='outlined'  type='button' onClick={onCancel}>{btnCanselText}</Button>
+                    <Button isLoading={isLoading} type='button' className={styles.btnConfirm} onClick={onConfirm}>{btnConfirmText}</Button>
+                    <Button isLoading={isLoading} variant='outlined'  type='button' onClick={onCancel}>{btnCanselText}</Button>
                 </ModalButtonsContainer>
             </div>
         </OverlayingPopup>

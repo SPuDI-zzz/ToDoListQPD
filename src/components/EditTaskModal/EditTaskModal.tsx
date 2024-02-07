@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import TaskModal from '../TaskModal/TaskModal';
 import { useUpdateTaskMutation } from '../../app/services/tasks.api';
 import { ITask } from '../../interfaces/interfaces';
@@ -10,13 +10,14 @@ interface EditTaskModalProps {
 }
 
 const EditTaskModal:FC<EditTaskModalProps> = ({isOpened, onClose, task}) => {
-    const [updateTask, {isError, isSuccess, reset}] = useUpdateTaskMutation();
+    const [updateTask, {isError, isSuccess, reset, isLoading}] = useUpdateTaskMutation();
     const taskRef = useRef<ITask>(task);
     
-    const onCloseHandler = useCallback(() => {
+    // eslint-disable-next-line
+    const onCloseHandler = () => {
         reset();
         onClose();
-    }, [reset, onClose]);
+    };
 
     useEffect(() => {
         if (isSuccess)
@@ -30,6 +31,7 @@ const EditTaskModal:FC<EditTaskModalProps> = ({isOpened, onClose, task}) => {
 
     return (            
         <TaskModal
+            isLoading={isLoading}
             isOpened={isOpened}
             onClose={onCloseHandler} 
             headerText={'Редактирование задачи'} 

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import CategoryModal from '../CategoryModal/CategoryModal';
 import { useUpdateCategoryMutation } from '../../app/services/categories.api';
 import { ICategory } from '../../interfaces/interfaces';
@@ -10,13 +10,14 @@ interface EditCategoryModalProps {
 }
 
 const EditCategoryModal:FC<EditCategoryModalProps> = ({isOpened, category, onClose}) => {
-    const [updateCategory, {isError, isSuccess, reset}] = useUpdateCategoryMutation();
+    const [updateCategory, {isError, isSuccess, reset, isLoading}] = useUpdateCategoryMutation();
     const categoryRef = useRef<ICategory>(category);
     
-    const onCloseHandler = useCallback(() => {
+    // eslint-disable-next-line
+    const onCloseHandler = () => {
         reset();
         onClose();
-    }, [reset, onClose]);
+    };
 
     useEffect(() => {
         if (isSuccess)
@@ -30,6 +31,7 @@ const EditCategoryModal:FC<EditCategoryModalProps> = ({isOpened, category, onClo
     
     return (          
         <CategoryModal 
+            isLoading={isLoading}
             headerText={'Редактирование категории'}
             defaultValues={category}
             btnSubmitText={'Сохранить'}

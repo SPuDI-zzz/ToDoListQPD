@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDeleteTaskMutation } from '../../app/services/tasks.api';
 import ConfirmDialog from '../../ui-kit/ConfirmDialog/ConfirmDialog';
 import { ITask } from '../../interfaces/interfaces';
@@ -11,12 +11,13 @@ interface DeleteTaskModalProps {
 }
 
 const DeleteTaskModal:FC<DeleteTaskModalProps> = ({isOpened, onClose, task}) => {
-    const [deleteTask, {isError, isSuccess, reset}] = useDeleteTaskMutation();
+    const [deleteTask, {isError, isSuccess, reset, isLoading}] = useDeleteTaskMutation();
 
-    const onCloseHandler = useCallback(() => {
+    // eslint-disable-next-line
+    const onCloseHandler = () => {
         reset();
         onClose();
-    }, [onClose, reset])
+    };
 
     useEffect(() => {
         if (isSuccess) 
@@ -29,6 +30,7 @@ const DeleteTaskModal:FC<DeleteTaskModalProps> = ({isOpened, onClose, task}) => 
 
     return (
         <ConfirmDialog
+            isLoading={isLoading}
             isOpened={isOpened}
             onCancel={onCloseHandler}
             headerText={'Удаление задачи'}

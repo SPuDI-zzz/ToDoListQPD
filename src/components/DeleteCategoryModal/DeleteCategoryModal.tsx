@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDeleteCategoryMutation } from '../../app/services/categories.api';
 import { ICategory } from '../../interfaces/interfaces';
 import ConfirmDialog from '../../ui-kit/ConfirmDialog/ConfirmDialog';
@@ -11,12 +11,13 @@ interface DeleteCategoryModalProps {
 }
 
 const DeleteCategoryModal:FC<DeleteCategoryModalProps> = ({isOpened, onClose, category}) => {
-    const [deleteCategory, {isError, isSuccess, reset}] = useDeleteCategoryMutation();
+    const [deleteCategory, {isError, isSuccess, reset, isLoading}] = useDeleteCategoryMutation();
 
-    const onCloseHandler = useCallback(() => {
+    // eslint-disable-next-line
+    const onCloseHandler = () => {
         reset();
         onClose();
-    }, [reset, onClose]);
+    };
 
     useEffect(() => {
         if (isSuccess)
@@ -29,6 +30,7 @@ const DeleteCategoryModal:FC<DeleteCategoryModalProps> = ({isOpened, onClose, ca
     
     return (
         <ConfirmDialog 
+            isLoading={isLoading}
             isOpened={isOpened}
             onCancel={onCloseHandler} 
             headerText={'Удаление категории'} 

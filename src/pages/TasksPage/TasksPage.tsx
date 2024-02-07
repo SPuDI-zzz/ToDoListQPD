@@ -1,25 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main/Main';
 import Tasks from '../../components/Tasks/Tasks';
-import CreateTask from '../../components/CreateTaskModal/CreateTaskModal';
+import CreateTaskButton from '../../components/CreateTaskButton/CreateTaskButton';
 
 const TasksPage = () => {
-    const [isOpenedCreateTaskModal, setIsOpenedCreateTaskModal] = useState(false);
-
-    const addTaskHandler = () => setIsOpenedCreateTaskModal(true);
-    const onCloseModal = () => setIsOpenedCreateTaskModal(false);
-
     return (
         <>
-            <Header buttonText='Добавить задачу' onButtonClick={addTaskHandler} />
+            <Header>
+                <CreateTaskButton/>
+            </Header>
             <Main>
                 <Tasks />
             </Main>
-            {isOpenedCreateTaskModal && <CreateTask 
-                isOpened={isOpenedCreateTaskModal}
-                onClose={onCloseModal} 
-            />}
         </>
     );
 };

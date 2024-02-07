@@ -1,11 +1,7 @@
 import React, { FC, useState } from 'react';
 import styles from './Select.module.css'
 import Label from '../../ui-kit/Label/Label';
-
-export interface SelectOption {
-    label: string;
-    value: number;
-}
+import { SelectOption } from '../../interfaces/interfaces';
 
 interface SelectProps {
     options?: SelectOption[];

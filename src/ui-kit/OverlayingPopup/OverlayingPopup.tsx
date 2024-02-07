@@ -9,12 +9,14 @@ interface OverlayingPopupProps {
 
 const OverlayingPopup:FC<PropsWithChildren<OverlayingPopupProps>> = ({children, isOpened, onClose}) => {
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
+        isOpened ? 
+            document.body.style.overflow = 'hidden' :
+            document.body.style.overflow = 'auto';
 
         return () => {
             document.body.style.overflow = 'auto'
         };
-    }, []);
+    }, [isOpened]);
 
     if(!isOpened) {
         return null;

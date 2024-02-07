@@ -1,8 +1,7 @@
-import React, { FC, useCallback, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import CategoryModal from '../CategoryModal/CategoryModal';
 import { ICategoryCreate } from '../../interfaces/interfaces';
 import { useAddCategoryMutation } from '../../app/services/categories.api';
-import { DEFAULT_CATEGORY } from '../../constants/constants';
 
 interface CreateCategoryModalProps {
     isOpened: boolean;
@@ -10,13 +9,14 @@ interface CreateCategoryModalProps {
 }
 
 const CreateCategoryModal:FC<CreateCategoryModalProps> = ({isOpened, onClose}) => {
-    const [createCategory, {isError, isSuccess, reset}] = useAddCategoryMutation();
+    const [createCategory, {isError, isSuccess, reset, isLoading}] = useAddCategoryMutation();
     const categoryRef = useRef<ICategoryCreate>();
 
-    const onCloseHandler = useCallback(() => {
+    // eslint-disable-next-line
+    const onCloseHandler = () => {
         reset();
         onClose();
-    }, [reset, onClose]);
+    };
 
     useEffect(() => {
         if (isSuccess)
@@ -30,8 +30,8 @@ const CreateCategoryModal:FC<CreateCategoryModalProps> = ({isOpened, onClose}) =
     
     return (
         <CategoryModal 
+            isLoading={isLoading}
             headerText={'Создание категории'}
-            defaultValues={DEFAULT_CATEGORY}
             btnSubmitText={'Создать'}
             btnCancelText={'Закрыть'} 
             onFormSubmit={createCategoryHandler} 

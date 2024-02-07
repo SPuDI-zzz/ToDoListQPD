@@ -36,16 +36,16 @@ const Task: FC<TaskProps> = ({task}) => {
                 </div>
                 <ListItemDescriptionText text={task.description}/>          
             </ListItem>
-            {isOpenedEditTaskModal && <EditTaskModal
+            <EditTaskModal
                 isOpened={isOpenedEditTaskModal}
                 onClose={closeEditModalHandler}
                 task={task}
-            />}
-            {isOpenedDeleteTaskModal && <DeleteTaskModal
+            />
+            <DeleteTaskModal
                 isOpened={isOpenedDeleteTaskModal}
                 onClose={closeDeleteModalHandler}
                 task={task}
-            />}
+            />
         </>
     );
 };

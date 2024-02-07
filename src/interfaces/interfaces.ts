@@ -18,3 +18,8 @@ export interface ICategory {
 }
 
 export interface ICategoryCreate extends Omit<ICategory, 'id'> {}
+
+export interface SelectOption {
+    label: string;
+    value: number;
+}

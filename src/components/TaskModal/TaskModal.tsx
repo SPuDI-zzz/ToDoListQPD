@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styles from './TaskModal.module.css'
 import { ITask } from '../../interfaces/interfaces';
-import Select, { SelectOption } from '../Select/Select';
+import Select from '../Select/Select';
 import MainPopup from '../../ui-kit/MainPopup/MainPopup';
 import { Controller, useForm } from 'react-hook-form';
 import { MAX_LENGTH_TASK_DESCRIPTION, MAX_LENGTH_TASK_NAME } from '../../constants/constants';
@@ -11,8 +11,7 @@ import ErrorAlert from '../../ui-kit/ErrorAlert/ErrorAlert';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Input from '../../ui-kit/Input/Input';
 import TextArea from '../../ui-kit/TextArea/TextArea';
-import { selectCategoriesResult } from '../../app/services/selectors/categories';
-import { createSelector } from '@reduxjs/toolkit';
+import { selectOptions } from '../../app/services/selectors/categories';
 
 interface TaskModalProps {
     headerText: string;
@@ -23,21 +22,8 @@ interface TaskModalProps {
     isOpened: boolean;
     onClose: () => void;
     errorMessage?: string;
+    isLoading?: boolean;
 }
-
-const selectOptions = createSelector(
-    selectCategoriesResult,
-    ({data: categories, isError}) => {
-        const options = categories?.map<SelectOption>(category => (
-            {label: category.name, value: category.id}
-        ));
-
-        return {
-            options,
-            isError  
-        }
-    }
-);
 
 const TaskModal:FC<TaskModalProps> = ({
     headerText,
@@ -48,14 +34,21 @@ const TaskModal:FC<TaskModalProps> = ({
     isOpened,
     onClose,
     errorMessage,
+    isLoading,
 }) => {
     const {
         handleSubmit,
         control,
+        reset,
     } = useForm<ITask>({
         mode: 'onChange',
-        defaultValues: defaultValues
+        defaultValues: defaultValues,
     });
+    
+    useEffect(() => {
+        if (!isOpened)
+            reset();
+    }, [isOpened, reset]);
 
     const {options, isError} = useTypedSelector(selectOptions);
 
@@ -131,8 +124,8 @@ const TaskModal:FC<TaskModalProps> = ({
                     </div>
                 }
                 <ModalButtonsContainer>
-                    <Button type='submit'>{btnSubmitText}</Button>
-                    <Button variant='outlined' type='button' onClick={onClose}>{btnCancelText}</Button>
+                    <Button isLoading={isLoading} type='submit'>{btnSubmitText}</Button>
+                    <Button isLoading={isLoading} variant='outlined' type='button' onClick={onClose}>{btnCancelText}</Button>
                 </ModalButtonsContainer>
             </form>           
         </MainPopup>

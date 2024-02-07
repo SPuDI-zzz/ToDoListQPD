@@ -26,16 +26,16 @@ const Category:FC<TCategoryProps> = ({category}) => {
                 <ListItemNameText text={category.name}/>
                 <ListItemDescriptionText text={category.description}/>  
             </ListItem>
-            {isOpenedEditCategoryModal && <EditCategoryModal
+           <EditCategoryModal
                 isOpened={isOpenedEditCategoryModal}
                 onClose={closeEditModalHandler}
                 category={category}
-            />}
-            {isOpenedDeleteCategoryModal && <DeleteCategoryModal
+            />
+            <DeleteCategoryModal
                 isOpened={isOpenedDeleteCategoryModal}
                 onClose={closeDeleteModalHandler}
                 category={category}
-            />}
+            />
         </>
     );
 };

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styles from './CategoryModal.module.css';
 import { ICategory } from '../../interfaces/interfaces';
 import MainPopup from '../../ui-kit/MainPopup/MainPopup';
@@ -19,6 +19,7 @@ interface CategoryModalProps {
     isOpened: boolean;
     onClose: () => void;
     errorMessage?: string;
+    isLoading?: boolean;
 }
 
 const CategoryModal:FC<CategoryModalProps> = ({
@@ -30,14 +31,21 @@ const CategoryModal:FC<CategoryModalProps> = ({
     isOpened,
     onClose,
     errorMessage,
+    isLoading,
 }) => {
     const {
         handleSubmit,
         control,
+        reset
     } = useForm<ICategory>({
         mode: 'onChange',
         defaultValues: defaultValues
     });
+
+    useEffect(() => {
+        if (!isOpened)
+            reset();
+    }, [isOpened, reset]);
 
     return (
         <MainPopup onClose={onClose} isOpened={isOpened} headerText={headerText}>
@@ -87,8 +95,8 @@ const CategoryModal:FC<CategoryModalProps> = ({
                 />
                 <ErrorAlert message={errorMessage}/>
                 <ModalButtonsContainer>
-                    <Button type='submit'>{btnSubmitText}</Button>
-                    <Button variant='outlined' type='button' onClick={onClose}>{btnCancelText}</Button>
+                    <Button isLoading={isLoading} type='submit'>{btnSubmitText}</Button>
+                    <Button isLoading={isLoading} variant='outlined' type='button' onClick={onClose}>{btnCancelText}</Button>
                 </ModalButtonsContainer>
             </form>
         </MainPopup>
