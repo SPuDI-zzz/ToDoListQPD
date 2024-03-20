@@ -1,0 +1,15 @@
+:root {
+    --color-grey: #808080;
+    --color-blue: #3F72AF;
+    --color-blue-light: #8FB6FF;
+    --color-white-primary: #FFFFFF;
+    --color-white-secondary: #DBE2EF;
+    --color-background-modal-panel: #0000004D;
+    --color-background-overlay: #0000004D;
+    --color-background-shadow: rgba(0, 0, 0, 0.5);
+    --color-black: #000000;
+    --color-red: #EC1D1D;
+    --color-error: var(--color-red);
+    --color-error-background: rgb(255, 194, 194);
+    --color-error-border: rgb(255, 158, 158);
+}

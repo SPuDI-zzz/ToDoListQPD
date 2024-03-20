@@ -1,0 +1,14 @@
+.description {
+    --max-lines: 1;
+    --line-height: 28px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: var(--line-height);
+    letter-spacing: 0em;
+    text-align: left;
+    color: var(--color-grey);
+    height: calc(var(--max-lines) * var(--line-height));
+    white-space: pre-line;
+    overflow: hidden;
+}

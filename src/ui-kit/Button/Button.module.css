@@ -1,0 +1,62 @@
+.btnPrimary {
+    width: 200px;
+    height: 46px;
+    border-radius: 4px;
+    background: var(--color-blue);
+    border: 2px solid var(--color-blue);
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 0;
+}
+
+.btnOutlined {
+    width: 120px;
+    height: 46px;
+    border-radius: 4px;
+    background: var(--color-white-primary);
+    border: 2px solid var(--color-blue);
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0;
+    letter-spacing: 0em;
+    text-align: center;
+    color: var(--color-blue);
+}
+
+.btnOutlined:hover,
+.btnPrimary:hover {
+    cursor: pointer;
+}
+
+.loading {
+    opacity: 0.6;
+}
+
+.loading:hover {
+    cursor: default;
+}
+
+@keyframes spinnerBorder {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+.loadingSpinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: -5px;
+    border: 0.2em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: .75s linear infinite spinnerBorder;
+    animation: .75s linear infinite spinnerBorder;
+    margin-right: 5px;
+    
+}

@@ -1,0 +1,9 @@
+.links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 40px;
+    text-align: left;
+    width: 219px;
+}

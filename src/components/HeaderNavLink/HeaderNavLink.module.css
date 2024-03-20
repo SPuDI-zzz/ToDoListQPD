@@ -1,0 +1,25 @@
+@import url(../../constants/constants.module.css);
+
+.link {
+    position: relative;
+    color: var(--color-white-secondary);
+}
+
+.link::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1.2px;
+    top: 87%;
+    left: 0;
+    background-color: var(--color-white-secondary);
+    
+}
+
+.activeLink {
+    color: var(--color-blue-light);
+}
+
+.activeLink::before {
+    background-color: var(--color-blue-light);
+}
